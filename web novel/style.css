@@ -164,6 +164,11 @@ html {
   z-index: 100;
 }
 
+/* セリフボックスを上げる設定 */
+#message-window.raised {
+  bottom: 45px; /* 20px + 25px */
+}
+
 #name-tag {
   position: absolute;
   top: -10px;
@@ -243,4 +248,44 @@ html {
 
 .hidden {
   display: none !important;
+}
+
+/* ハンバーガーメニュー */
+#menu-hamburger {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: var(--win-bg);
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+/* 設定ダイアログ */
+#menu-dialog {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2100;
+}
+
+.menu-content {
+  background: #222;
+  padding: 30px;
+  border: 2px solid #555;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

@@ -1,10 +1,10 @@
 {
   "ra_scene_container":{
     "meta":{
-      "id":"s1_1_03",
+      "id":"s1_1_04",
       "chapter":[1,"chapter title"],
       "scene":[1,"scene title"],
-      "back_id":"s1_1_02"
+      "back_id":"s1_1_03"
     },
     "background":"story/img/s.png",
     "panels":{
@@ -13,11 +13,7 @@
     },
     "texts":{
       "name":"レイト",
-      "text":["俺は元気だ。\nあの新人も上手くやってるぞ。","s1_1_04.json"]
-    },
-    "transition":{
-      "color":"#ffffff",
-      "duration":1
-    }  
+      "text":["そんじゃ、いってくるぞ。","s1_1_01.json"]
+    }
   }
 }
