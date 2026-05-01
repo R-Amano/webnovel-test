@@ -1,0 +1,19 @@
+{
+  "ra_scene_container":{
+    "meta":{
+      "id":"s1_1_03",
+      "chapter":[1,"chapter title"],
+      "scene":[1,"scene title"],
+      "back_id":"s1_1_01"
+    },
+    "background":"story/img/s.png",
+    "panels":{
+      "property":"character",
+      "url":"story/img/leito3.png"
+    },
+    "texts":{
+      "name":"レイト",
+      "text":["俺は元気だ。\nあの新人も上手くやってるぞ。","s1_1_01.json"]
+    }
+  }
+}
