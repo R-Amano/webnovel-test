@@ -1,4 +1,4 @@
-# RA Web Nobel (Test version)
+# RA Web Novel (Test version)
 ## ウェブ小説 (公開テスト版)
 オリジナルウェブ小説のシステムをテストしています。
 
