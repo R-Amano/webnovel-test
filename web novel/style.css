@@ -3,7 +3,8 @@
   --win-bg: rgba(0, 0, 0, 0.85);
   --accent-color: #fff;
   --text-color: #fff;
-  --game-height: 90vh;
+  --game-height: 100vh;
+  --game-height: 100dvh; /* 動的なビューポート高さに対応 */
 }
 
 * {
@@ -48,9 +49,9 @@ html {
 /* パネルレイアウト */
 .panel-container {
   position: absolute;
-  bottom: -50%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,7 +63,8 @@ html {
 }
 
 .type-character {
-  height: 130vh;
+  height: 100dvh;
+  min-height: 500px; /* 画面が低くなっても500px以下にはならない */
 }
 
 .type-panel {
@@ -126,58 +128,44 @@ html {
 
 /* 感嘆符 (Emote) */
 .emote-icon {
-  width: 100px;
-  height: 100px;
+  position: absolute;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
-  margin-bottom: -10px;
   z-index: 10;
-  animation: pop-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes pop-up {
-  from {
-    transform: scale(0);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  /* アニメーションを削除 */
+  animation: none;
+  transform: translate(90px,10vh);
 }
 
 /* メッセージウィンドウ */
 #message-window {
   position: absolute;
-  bottom: 20px;
+  bottom: calc(2% + env(safe-area-inset-bottom));
   left: 5%;
   width: 90%;
-  height: 120px;
-  min-height: 120px;
+  height: 110px;
+  min-height: 110px;
   background: var(--win-bg);
-  border: 2px solid #555;
-  border-radius: 8px;
+  border: 1.5px solid #d4af37; /* 金の枠線 */
+  border-radius: 1px;
   color: var(--text-color);
-  padding: 30px 25px;
+  padding: 20px 40px 0px 5%;
   box-sizing: border-box;
   cursor: pointer;
   z-index: 100;
 }
 
-/* セリフボックスを上げる設定 */
-#message-window.raised {
-  bottom: 45px; /* 20px + 25px */
-}
-
 #name-tag {
   position: absolute;
-  top: -10px;
+  top: -15px; /* ウィンドウの枠線上に配置 */
   left: 20px;
-  background: rgb(68, 68, 68);
-  padding: 4px 25px;
-  font-weight: bold;
-  border: 1px solid var(--accent-color);
+  background: #111; /* 名前タグを際立たせる背景色 */
+  border: 1px solid #d4af37; /* 金の枠線を追加 */
+  color: #d4af37; /* 名前の文字色を金に変更 */
+  padding: 4px 12px;
   border-radius: 4px;
+  font-size: 0.9rem;
 }
 
 #text-area {

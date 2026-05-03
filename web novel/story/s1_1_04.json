@@ -9,11 +9,11 @@
     "background":"story/img/s.png",
     "panels":{
       "property":"character",
-      "url":"story/img/leito3.png"
+      "url":"story/img/minoru1.png"
     },
     "texts":{
-      "name":"レイト",
-      "text":["そんじゃ、いってくるぞ。","s1_1_01.json"]
+      "name":"ミノル",
+      "text":["ええ、気を付けていってらっしゃい！","s1_1_05.json"]
     }
   }
 }

@@ -56,6 +56,10 @@ async function renderScene(data) {
   const root = data.ra_scene_container;
   if (!root) return;
 
+  // 暗転（トランジション）開始時にメニューボタンを隠す
+  const menuBtn = document.getElementById('menu-hamburger');
+  if (menuBtn) menuBtn.classList.add('hidden');
+
   // --- 新しいシーンの描画前に、メッセージウィンドウとテキストをクリアし、非表示にする ---
   DOM.textArea.textContent = ''; // テキストエリアの内容を即座にクリア
   DOM.msgWin.classList.add('hidden'); // メッセージウィンドウを非表示にする
@@ -87,6 +91,9 @@ async function renderScene(data) {
   }
 
   updateTexts(root.texts);
+
+  // シーンの準備が整ったらメニューボタンを再表示する
+  if (menuBtn) menuBtn.classList.remove('hidden');
 }
 
 function updateBackground(background) {
@@ -226,9 +233,6 @@ function initMenu() {
   dialog.innerHTML = `
     <div class="menu-content">
       <button id="menu-back-btn" class="choice-btn">前のシーンに戻る</button>
-      <label style="color:white; cursor:pointer;">
-        <input type="checkbox" id="menu-raise-check"> セリフボックスを少し高くする
-      </label>
       <button id="menu-close-btn" class="choice-btn" style="background:#444;">閉じる</button>
     </div>
   `;
@@ -251,14 +255,18 @@ function initMenu() {
     }
   };
 
-  // 高さ調整チェックボックス
-  const check = document.getElementById('menu-raise-check');
-  check.onchange = (e) => {
-    DOM.msgWin.classList.toggle('raised', e.target.checked);
-  };
 }
 
 // メニュー初期化
 initMenu();
 
-loadScene('story/s1_1_01.json');
+/**
+ * URLパラメータ (?scene=xxx) から初期シーンを特定してロードする
+ */
+const urlParams = new URLSearchParams(window.location.search);
+const sceneParam = urlParams.get('scene');
+const initialScene = sceneParam 
+  ? (sceneParam.endsWith('.json') ? sceneParam : `${sceneParam}.json`) 
+  : 's1_1_01.json';
+
+loadScene(initialScene);

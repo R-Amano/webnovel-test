@@ -6,17 +6,18 @@
       "scene":[1,"scene title"],
       "back_id":"s1_1_02"
     },
-    "background":"story/img/s.png",
+    "background":"story/img/s1.jpg",
     "panels":{
       "property":"character",
-      "url":"story/img/leito3.png"
+      "url":"story/img/manabu1.png",
+      "emote":"story/img/emt/e.png"
     },
     "texts":{
-      "name":"レイト",
-      "text":["俺は元気だ。\nあの新人も上手くやってるぞ。","s1_1_04.json"]
+      "name":"マナブ",
+      "text":["こんにちは！\n今日もフィールドワーク、いってきます！","s1_1_04.json"]
     },
     "transition":{
-      "color":"#ffffff",
+      "color":"#fff",
       "duration":1
     }  
   }

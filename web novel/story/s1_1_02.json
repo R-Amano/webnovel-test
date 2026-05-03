@@ -9,11 +9,12 @@
     "background":"story/img/s.png",
     "panels":{
       "property":"character",
-      "url":"story/img/leito2.png"
+      "url":"story/img/rait3.png",
+      "emote":"story/img/emt/q.png"
     },
     "texts":{
       "name":"レイト",
-      "text":["今の近況か？","s1_1_03.json"]
+      "text":["今の近況か？\nなんとかやってるぞ。じゃあな！","s1_1_03.json"]
     }
   }
 }

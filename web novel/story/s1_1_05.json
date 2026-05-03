@@ -1,19 +1,19 @@
 {
   "ra_scene_container":{
     "meta":{
-      "id":"s1_1_01",
+      "id":"s1_1_05",
       "chapter":[1,"chapter title"],
       "scene":[1,"scene title"],
-      "back_id":"s1_1_02"
+      "back_id":"s1_1_04"
     },
     "background":"story/img/s.png",
     "panels":{
       "property":"character",
-      "url":"story/img/rait1.png"
+      "url":"story/img/manabu1.png"
     },
     "texts":{
-      "name":"レイト",
-      "text":["よう！\n元気か？\n久しぶりだな。","s1_1_02.json"]
+      "name":"マナブ",
+      "text":["最初はこの材料から探してみよ。","s1_1_01.json"]
     },
     "transition":{
       "color":"#000",
