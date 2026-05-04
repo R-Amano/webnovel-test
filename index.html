@@ -52,10 +52,10 @@
           const epTitle = parts[1] || '';
 
           li.innerHTML = `
-                        <a href="storys/index.html?scene=${item.id}/01">
+                        <div class="episode-link" onclick="location.href='storys/index.html?scene=${item.id}/01'">
                             <span class="ep-number">${epNum}</span>
                             <span class="ep-title">${epTitle}</span>
-                        </a>
+                        </div>
                     `;
           list.appendChild(li);
         });

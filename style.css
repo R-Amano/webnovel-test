@@ -27,7 +27,8 @@ body {
 
 /* Hero Section */
 .hero {
-  height: 100vh;
+  position: fixed;
+  inset: 0;
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('assets/img/thumb.jpg') center/cover;
   display: flex;
   flex-direction: column;
@@ -117,15 +118,17 @@ h2 {
   border-bottom: 1px solid #333;
 }
 
-.episode-list a {
+.episode-link {
   display: flex;
   padding: 20px;
   color: #f0f0f0;
   text-decoration: none;
   transition: background 0.2s;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.episode-list a:hover {
+.episode-link:hover {
   background-color: #2a2a2a;
 }
 
