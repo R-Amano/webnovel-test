@@ -1,0 +1,20 @@
+{
+  "ra_scene_container":{
+    "meta":{
+      "id":"s1_1_02",
+      "chapter":[1,"chapter title"],
+      "scene":[1,"scene title"],
+      "back_id":"s1_1_01"
+    },
+    "background":"story/img/s.png",
+    "panels":{
+      "property":"character",
+      "url":"story/img/rait3.png",
+      "emote":"story/img/emt/q.png"
+    },
+    "texts":{
+      "name":"レイト",
+      "text":["今の近況か？\nなんとかやってるぞ。じゃあな！","s1_1_03.json"]
+    }
+  }
+}

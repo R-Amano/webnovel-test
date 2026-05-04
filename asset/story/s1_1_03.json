@@ -1,0 +1,24 @@
+{
+  "ra_scene_container":{
+    "meta":{
+      "id":"s1_1_03",
+      "chapter":[1,"chapter title"],
+      "scene":[1,"scene title"],
+      "back_id":"s1_1_02"
+    },
+    "background":"story/img/s1.jpg",
+    "panels":{
+      "property":"character",
+      "url":"story/img/manabu1.png",
+      "emote":"story/img/emt/e.png"
+    },
+    "texts":{
+      "name":"マナブ",
+      "text":["こんにちは！\n今日もフィールドワーク、いってきます！","s1_1_04.json"]
+    },
+    "transition":{
+      "color":"#fff",
+      "duration":1
+    }  
+  }
+}

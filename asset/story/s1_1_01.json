@@ -1,0 +1,23 @@
+{
+  "ra_scene_container":{
+    "meta":{
+      "id":"s1_1_01",
+      "chapter":[1,"chapter title"],
+      "scene":[1,"scene title"],
+      "back_id":"s1_1_02"
+    },
+    "background":"story/img/s.png",
+    "panels":{
+      "property":"character",
+      "url":"story/img/rait1.png"
+    },
+    "texts":{
+      "name":"レイト",
+      "text":["よう！\n元気か？\n久しぶりだな。","s1_1_02.json"]
+    },
+    "transition":{
+      "color":"#000",
+      "duration":1
+    } 
+  }
+}
