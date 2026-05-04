@@ -23,7 +23,30 @@ html {
   height: 100%;
   background-color: #000;
   overflow: hidden;
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  font-family: 'Shippori Mincho', "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ストーリー情報（左上） */
+#story-info {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 900;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  line-height: 1.2;
+}
+
+#story-info-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+#story-info-progress {
+  font-size: 0.75rem;
+  opacity: 0.8;
 }
 
 #game-container {
@@ -150,6 +173,7 @@ html {
   box-sizing: border-box;
   cursor: pointer;
   z-index: 100;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
 }
 
 #name-tag {

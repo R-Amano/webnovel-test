@@ -27,7 +27,8 @@ const state = {
   currentTypingTimer: null,
   isTyping: false,
   currentFullText: "",
-  currentSceneData: null // 現在のシーン情報を保持
+  currentSceneData: null, // 現在のシーン情報を保持
+  metaData: null // meta.jsonの情報を保持
 };
 
 /**
@@ -45,6 +46,35 @@ window.addEventListener('orientationchange', adjustViewport);
 setTimeout(adjustViewport, 100);
 
 /**
+ * メタデータを読み込む
+ */
+async function loadMetaData() {
+  try {
+    const response = await fetch('meta.json');
+    state.metaData = await response.json();
+  } catch (error) {
+    console.error("Failed to load meta.json:", error);
+  }
+}
+
+/**
+ * 左上のストーリー情報を更新する
+ */
+function updateStoryInfoUI(jsonPath) {
+  if (!state.metaData) return;
+
+  // "1-1/01" のような形式からIDとシーン番号を抽出
+  const [storyId, sceneFile] = jsonPath.replace('.json', '').split('/');
+  const sceneNum = parseInt(sceneFile, 10);
+
+  const meta = state.metaData.ra_story_metadatas.find(m => m.id === storyId);
+  if (meta) {
+    document.getElementById('story-info-title').textContent = meta.title;
+    document.getElementById('story-info-progress').textContent = `Page: ${sceneNum} / ${meta.max_scene}`;
+  }
+}
+
+/**
  * シーンJSONをロードする
  */
 async function loadScene(jsonPath) {
@@ -53,6 +83,9 @@ async function loadScene(jsonPath) {
   console.log("Loading scene:", finalPath);
 
   try {
+    if (!state.metaData) await loadMetaData(); // 初回のみメタ読み込み
+    updateStoryInfoUI(jsonPath);
+
     const response = await fetch(finalPath);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
