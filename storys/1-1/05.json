@@ -1,18 +1,13 @@
 {
   "ra_scene_container":{
-    "back_id":"1-1/04",
-    "background":"scene/test.jpg",
-    "panels":{
-      "property":"character",
-      "url":"chara/manabu1.png"
-    },
-    "texts":{
-      "name":"マナブ",
-      "text":["最初はこの材料から探してみよ。","1-1/01"]
-    },
-    "transition":{
-      "color":"#000",
-      "duration":1
-    } 
+    "back_id": "1-1/04",
+    "background": "scene/01.jpg",
+    "texts": {
+      "name": "自分",
+      "text": [
+        "う、うわ！\nもうこんな時間！",
+        "1-1/06"
+      ]
+    }
   }
 }

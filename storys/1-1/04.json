@@ -1,14 +1,13 @@
 {
   "ra_scene_container":{
-    "back_id":"1-1/03",
-    "background":"scene/1.jpg",
-    "panels":{
-      "property":"character",
-      "url":"chara/minoru1.png"
-    },
-    "texts":{
-      "name":"ミノル",
-      "text":["ええ、気を付けていってらっしゃい！","1-1/05"]
+    "back_id": "1-1/03",
+    "background": "scene/02.jpg",
+    "texts": {
+      "name": "自分",
+      "text": [
+        "明日から列車の運転か～\nどんな感じなんだろう？",
+        "1-1/05"
+      ]
     }
   }
 }

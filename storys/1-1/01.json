@@ -1,18 +1,15 @@
 {
-  "ra_scene_container":{
-    "back_id":"1-1/01",
-    "background":"scene/test.jpg",
-    "panels":{
-      "property":"character",
-      "url":"chara/rait1.png"
+  "ra_scene_container": {
+    "back_id": "1-1/01",
+    "texts": {
+      "text": [
+        "某日、乗務研修所の寮",
+        "1-1/02"
+      ]
     },
-    "texts":{
-      "name":"レイト",
-      "text":["よう！\n元気か？\n久しぶりだな。","1-1/02"]
-    },
-    "transition":{
-      "color":"#000",
-      "duration":1
-    } 
+    "transition": {
+      "color": "#000",
+      "duration": 3
+    }
   }
 }

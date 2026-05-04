@@ -1,12 +1,12 @@
 {
   "ra_scene_container": {
-    "back_id": "1-1/01",
-    "background": "scene/02.jpg",
+    "back_id": "1-1/07",
+    "background": "scene/03.jpg",
     "texts": {
       "name": "自分",
       "text": [
-        "よいしょっと",
-        "1-1/03"
+        "ふぁ～\nおはよー",
+        "1-1/09"
       ]
     },
     "transition": {
