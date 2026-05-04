@@ -192,7 +192,8 @@ html {
 
 /* メニュー用ボタン */
 .menu-btn {
-  width: 320px;
+  width: 100%;
+  min-width: 240px;
   padding: 18px;
   background: #222;
   color: #fff;
@@ -257,6 +258,8 @@ html {
   padding: 30px;
   border: 2px solid #555;
   border-radius: 10px;
+  width: 80%;
+  max-width: 320px;
   display: flex;
   flex-direction: column;
   gap: 20px;

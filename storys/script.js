@@ -233,6 +233,7 @@ function initMenu() {
   dialog.innerHTML = `
     <div class="menu-content">
       <button id="menu-back-btn" class="menu-btn">前のシーンに戻る</button>
+      <button id="menu-home-btn" class="menu-btn">シナリオ選択に戻る</button>
       <button id="menu-close-btn" class="menu-btn" style="background:#444;">閉じる</button>
     </div>
   `;
@@ -242,6 +243,11 @@ function initMenu() {
   btn.onclick = () => dialog.classList.remove('hidden');
   
   document.getElementById('menu-close-btn').onclick = () => dialog.classList.add('hidden');
+
+  // シナリオ選択に戻る
+  document.getElementById('menu-home-btn').onclick = () => {
+    window.location.href = '../index.html';
+  };
 
   // 前のシーンに戻る
   document.getElementById('menu-back-btn').onclick = () => {
