@@ -3,8 +3,6 @@
   --win-bg: rgba(0, 0, 0, 0.85);
   --accent-color: #fff;
   --text-color: #fff;
-  --game-height: 100vh;
-  --game-height: 100dvh; /* 動的なビューポート高さに対応 */
 }
 
 * {
@@ -29,11 +27,8 @@ html {
 }
 
 #game-container {
-  position: relative;
-  width: 100%;
-  /* 横幅はフル */
-  height: var(--game-height);
-  /* 高さを90%に固定 */
+  position: fixed;
+  inset: 0;
   background: #000;
   overflow: hidden;
 }
