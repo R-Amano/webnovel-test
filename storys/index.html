@@ -16,7 +16,10 @@
     /* PWA/スマホ全画面表示時の見切れ対策 */
     #game-container {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh; /* フォールバック */
     }
   </style>
 </head>

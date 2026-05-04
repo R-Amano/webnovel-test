@@ -28,7 +28,10 @@ html {
 
 #game-container {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
   background: #000;
   overflow: hidden;
 }
@@ -137,7 +140,7 @@ html {
 /* メッセージウィンドウ */
 #message-window {
   position: absolute;
-  bottom: calc(2% + env(safe-area-inset-bottom));
+  bottom: calc(20px + env(safe-area-inset-bottom)); /* 2%から20pxに固定して余裕を持たせる */
   left: 5%;
   width: 90%;
   height: 110px;

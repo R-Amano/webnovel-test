@@ -31,6 +31,20 @@ const state = {
 };
 
 /**
+ * モバイル端末での表示高さ（vh）を正しく計算する
+ * 特にiOS PWAの初回起動時のズレを解消します
+ */
+function adjustViewport() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('resize', adjustViewport);
+window.addEventListener('orientationchange', adjustViewport);
+// 初期実行（少し遅らせることでPWAの起動タイミングに合わせる）
+setTimeout(adjustViewport, 100);
+
+/**
  * シーンJSONをロードする
  */
 async function loadScene(jsonPath) {
