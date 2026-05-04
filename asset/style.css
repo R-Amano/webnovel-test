@@ -129,13 +129,14 @@ html {
 /* 感嘆符 (Emote) */
 .emote-icon {
   position: absolute;
+  left: 50%;
+  top: 18dvh;
+  transform: translateX(calc(-5% + 80px));
   width: 70px;
   height: 70px;
   object-fit: contain;
   z-index: 10;
-  /* アニメーションを削除 */
   animation: none;
-  transform: translate(90px,10vh);
 }
 
 /* メッセージウィンドウ */
