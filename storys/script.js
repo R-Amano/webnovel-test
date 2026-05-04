@@ -46,6 +46,22 @@ window.addEventListener('orientationchange', adjustViewport);
 setTimeout(adjustViewport, 100);
 
 /**
+ * 画像をプリロードする
+ */
+function preloadImage(url) {
+  return new Promise((resolve) => {
+    if (!url) {
+      resolve();
+      return;
+    }
+    const img = new Image();
+    img.src = url;
+    img.onload = resolve;
+    img.onerror = resolve; // エラー時も進行を止めない
+  });
+}
+
+/**
  * メタデータを読み込む
  */
 async function loadMetaData() {
@@ -117,11 +133,18 @@ async function renderScene(data) {
   }
   // --- クリーンアップ終了 ---
 
+  // プリロード対象のURLを取得
+  const bgUrl = getAssetPath(root.background);
+  const panelUrl = root.panels?.url ? getAssetPath(root.panels.url) : null;
+  const emoteUrl = root.panels?.emote ? getAssetPath(root.panels.emote) : null;
+
   if (root.transition) {
     // 1. フェードアウト (透明 -> 黒) 1秒固定
     await handleTransition(0, 1, 1, root.transition.color);
 
-    // 2. 画面が完全に暗いうちに素材を更新
+    // 2. 画面が完全に暗いうちに素材を読み込み・更新
+    await Promise.all([preloadImage(bgUrl), preloadImage(panelUrl), preloadImage(emoteUrl)]);
+
     updateBackground(root.background);
     updatePanels(root.panels);
 
@@ -131,7 +154,9 @@ async function renderScene(data) {
     // 4. フェードイン (黒 -> 透明) 1秒固定
     await handleTransition(1, 0, 1, root.transition.color);
   } else {
-    // トランジション指定がない場合は即座に更新
+    // トランジション指定がない場合も、読み込みを待ってから切り替える
+    await Promise.all([preloadImage(bgUrl), preloadImage(panelUrl), preloadImage(emoteUrl)]);
+
     updateBackground(root.background);
     updatePanels(root.panels);
     DOM.transLayer.style.opacity = 0;
