@@ -12,6 +12,15 @@
   <link rel="apple-touch-icon" href="../assets/img/icon.png">
   <title>RA Engine - Web Visual Novel</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* PWA/スマホ全画面表示時の見切れ対策 */
+    #game-container {
+      height: 100dvh;
+    }
+    #message-window {
+      margin-bottom: env(safe-area-inset-bottom, 0px);
+    }
+  </style>
 </head>
 
 <body>

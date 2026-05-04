@@ -9,6 +9,7 @@ body {
     user-select: none;
     -webkit-user-select: none;
     height: 100vh;
+    height: 100dvh;
     width: 100vw;
 }
 
@@ -132,10 +133,10 @@ h2 {
 /* Footer */
 footer {
     position: absolute;
-    bottom: 0;
+    bottom: env(safe-area-inset-bottom, 0px);
     left: 0;
     text-align: left;
-    padding: 15px 25px;
+    padding: 10px 25px;
     font-size: 0.9rem;
     color: #fff;
 }
