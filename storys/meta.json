@@ -2,43 +2,8 @@
   "ra_story_metadatas":[
     {
       "id":"1-1",
-      "max_scene":20,
+      "max_scene":13,
       "title":"第１話 - 新天地にて"
-    },
-    {
-      "id":"1-2",
-      "max_scene":12,
-      "title":"第２話 - 続く道"
-    },
-    {
-      "id":"1-3",
-      "max_scene":8,
-      "title":"第３話 - 風の行方"
-    },
-    {
-      "id":"1-4",
-      "max_scene":15,
-      "title":"第４話 - 影の正体"
-    },
-    {
-      "id":"1-5",
-      "max_scene":10,
-      "title":"第５話 - 静かな決意"
-    },
-    {
-      "id":"1-6",
-      "max_scene":7,
-      "title":"第６話 - 嵐の前触れ"
-    },
-    {
-      "id":"1-7",
-      "max_scene":20,
-      "title":"第７話 - 運命の分岐点"
-    },
-    {
-      "id":"1-8",
-      "max_scene":12,
-      "title":"第８話 - 遥かなる地へ"
     }
   ]
 }

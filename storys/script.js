@@ -221,7 +221,7 @@ function updateTexts(texts) {
   typeText(DOM.textArea, state.currentFullText);
 
   // クリックイベントの再設定
-  DOM.msgWin.onclick = (e) => {
+  DOM.msgWin.onclick = async (e) => {
     e.stopPropagation();
 
     if (state.isTyping) {
@@ -229,8 +229,18 @@ function updateTexts(texts) {
       return;
     }
 
-    if (texts.text?.[1]) {
-      loadScene(texts.text[1]);
+    if (texts.text?.[1]) { // 次のシーンが指定されている場合
+      if (texts.text[1] === "end") {
+        // "end" が指定された場合は、UIを隠してから暗転し、シナリオ選択ページへ遷移
+        DOM.msgWin.classList.add('hidden');
+        const menuBtn = document.getElementById('menu-hamburger');
+        if (menuBtn) menuBtn.classList.add('hidden');
+
+        await handleTransition(0, 1, 1, '#000'); // 1秒かけて黒にフェードアウト
+        window.location.href = '../index.html'; // シナリオ選択ページへリダイレクト
+      } else {
+        loadScene(texts.text[1]); // 通常のシーンロード
+      }
     }
   };
 }
