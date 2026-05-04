@@ -2,7 +2,7 @@
   "ra_scene_container":{
     "meta":{
       "id":"s1_1_01",
-      "chapter":[1,"chapter title"],
+      "chapter":[1,"章のタイトル"],
       "scene":[1,"scene title"],
       "back_id":"s1_1_02"
     },
