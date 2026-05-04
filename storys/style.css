@@ -195,20 +195,8 @@ html {
   }
 }
 
-/* 選択肢 */
-#choice-container {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  gap: 20px;
-  z-index: 200;
-}
-
-.choice-btn {
+/* メニュー用ボタン */
+.menu-btn {
   width: 320px;
   padding: 18px;
   background: #222;
@@ -221,7 +209,7 @@ html {
   transition: 0.3s;
 }
 
-.choice-btn:hover {
+.menu-btn:hover {
   background: #fff;
   color: #000;
 }

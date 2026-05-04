@@ -16,7 +16,6 @@ const DOM = {
   bg: document.getElementById('background'),
   panelLayer: document.getElementById('panel-layer'),
   msgWin: document.getElementById('message-window'),
-  choiceBox: document.getElementById('choice-container'),
   nameTag: document.getElementById('name-tag'),
   textArea: document.getElementById('text-area'),
   transLayer: document.getElementById('transition-layer')
@@ -126,8 +125,6 @@ function updatePanels(panels) {
 }
 
 function updateTexts(texts) {
-  DOM.choiceBox.classList.add('hidden');
-
   if (!texts) {
     DOM.msgWin.classList.add('hidden');
     return;
@@ -152,29 +149,10 @@ function updateTexts(texts) {
       return;
     }
 
-    if (texts.choices?.length > 0) {
-      showChoices(texts.choices);
-    } else if (texts.text?.[1]) {
+    if (texts.text?.[1]) {
       loadScene(texts.text[1]);
     }
   };
-}
-
-function showChoices(choices) {
-  DOM.choiceBox.innerHTML = '';
-  DOM.choiceBox.classList.remove('hidden');
-
-  choices.forEach(c => {
-    const container = document.createElement('div');
-    container.className = 'choice-btn';
-    container.textContent = c.label;
-    container.onclick = (e) => {
-      e.stopPropagation();
-      loadScene(c.next_json);
-      DOM.choiceBox.classList.add('hidden');
-    };
-    DOM.choiceBox.appendChild(container);
-  });
 }
 
 /**
@@ -232,8 +210,8 @@ function initMenu() {
   dialog.className = 'hidden';
   dialog.innerHTML = `
     <div class="menu-content">
-      <button id="menu-back-btn" class="choice-btn">前のシーンに戻る</button>
-      <button id="menu-close-btn" class="choice-btn" style="background:#444;">閉じる</button>
+      <button id="menu-back-btn" class="menu-btn">前のシーンに戻る</button>
+      <button id="menu-close-btn" class="menu-btn" style="background:#444;">閉じる</button>
     </div>
   `;
   document.body.appendChild(dialog);
