@@ -1,19 +1,16 @@
 {
   "ra_scene_container":{
     "meta":{
-      "id":"s1_1_04",
-      "chapter":[1,"chapter title"],
-      "scene":[1,"scene title"],
-      "back_id":"s1_1_03"
+      "back_id":"1-1/03"
     },
-    "background":"story/img/s.png",
+    "background":"../assets/img/scene/1.jpg",
     "panels":{
       "property":"character",
-      "url":"story/img/minoru1.png"
+      "url":"../assets/img/chara/minoru1.png"
     },
     "texts":{
       "name":"ミノル",
-      "text":["ええ、気を付けていってらっしゃい！","s1_1_05.json"]
+      "text":["ええ、気を付けていってらっしゃい！","1-1/05"]
     }
   }
 }

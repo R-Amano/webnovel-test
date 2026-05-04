@@ -1,20 +1,17 @@
 {
   "ra_scene_container":{
     "meta":{
-      "id":"s1_1_03",
-      "chapter":[1,"chapter title"],
-      "scene":[1,"scene title"],
-      "back_id":"s1_1_02"
+      "back_id":"1-1/02"
     },
-    "background":"story/img/s1.jpg",
+    "background":"../assets/img/scene/1.jpg",
     "panels":{
       "property":"character",
-      "url":"story/img/manabu1.png",
-      "emote":"story/img/emt/e.png"
+      "url":"../assets/img/chara/manabu1.png",
+      "emote":"../assets/img/emote/e.png"
     },
     "texts":{
       "name":"マナブ",
-      "text":["こんにちは！\n今日もフィールドワーク、いってきます！","s1_1_04.json"]
+      "text":["こんにちは！\n今日もフィールドワーク、いってきます！","1-1/04"]
     },
     "transition":{
       "color":"#fff",
