@@ -1,0 +1,171 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Shippori Mincho', serif;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    line-height: 1.8;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    height: 100vh;
+    width: 100vw;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/thumb.jpg') center/cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.menu-container {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px 40px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    max-width: 420px;
+    width: 75%;
+    max-height: 50vh;
+    min-height: 200px;
+    margin-bottom: 60px;
+    flex-shrink: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #555 rgba(0, 0, 0, 0);
+}
+
+/* スクロールバーのカスタマイズ (Chrome, Safari, Edge用) */
+.menu-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.menu-container::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+}
+
+.main-logo {
+    max-width: min(70%, 500px);
+    max-height: 30vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 30px;
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+.tagline {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #ccc;
+}
+
+/* Buttons */
+.btn-start {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn-start:hover {
+    background-color: #ddd;
+}
+
+/* Sections */
+section {
+    margin-bottom: 60px;
+}
+
+h2 {
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+/* Episode List */
+.episode-list {
+    list-style: none;
+    padding: 0;
+}
+
+.episode-list li {
+    border-bottom: 1px solid #333;
+}
+
+.episode-list a {
+    display: flex;
+    padding: 20px;
+    color: #f0f0f0;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.episode-list a:hover {
+    background-color: #2a2a2a;
+}
+
+.ep-number {
+    font-weight: bold;
+    margin-right: 20px;
+    color: #aaa;
+    min-width: 60px;
+}
+
+/* Footer */
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: left;
+    padding: 15px 25px;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+/* 横画面（ランドスケープ）用の調整 */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .hero {
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding: 0 20px;
+    }
+
+    .main-logo {
+        max-width: 40%;
+        max-height: 60vh;
+        width: auto;
+        margin-bottom: 0;
+        margin-right: 20px;
+    }
+
+    .menu-container {
+        width: 45%;
+        max-height: 70vh;
+        margin-bottom: 0;
+        padding: 15px 25px;
+    }
+
+    footer {
+        /* 横画面では場所を取るため非表示、またはさらに小さく */
+        padding: 5px;
+        font-size: 0.7rem;
+    }
+}
