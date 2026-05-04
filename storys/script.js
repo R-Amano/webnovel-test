@@ -4,7 +4,6 @@
 
 // --- 設定・定数 ---
 const CONFIG = {
-  STORY_PATH: 'story/',
   DEFAULT_TYPING_SPEED: 30,
   PAUSE_CHARS: {
     '。': 500,
@@ -35,11 +34,12 @@ const state = {
  * シーンJSONをロードする
  */
 async function loadScene(jsonPath) {
-  const fullPath = jsonPath.startsWith(CONFIG.STORY_PATH) ? jsonPath : `${CONFIG.STORY_PATH}${jsonPath}`;
-  console.log("Loading scene:", fullPath);
+  // .json が含まれていない場合は自動で付与する
+  const finalPath = jsonPath.endsWith('.json') ? jsonPath : `${jsonPath}.json`;
+  console.log("Loading scene:", finalPath);
 
   try {
-    const response = await fetch(fullPath);
+    const response = await fetch(finalPath);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     state.currentSceneData = data; // データを保存
@@ -248,8 +248,7 @@ function initMenu() {
     const backId = state.currentSceneData?.ra_scene_container?.meta?.back_id;
     if (backId) {
       dialog.classList.add('hidden');
-      const jsonPath = backId.endsWith('.json') ? backId : `${backId}.json`;
-      loadScene(jsonPath);
+      loadScene(backId);
     } else {
       alert("前のシーンが設定されていません。");
     }
@@ -265,8 +264,6 @@ initMenu();
  */
 const urlParams = new URLSearchParams(window.location.search);
 const sceneParam = urlParams.get('scene');
-const initialScene = sceneParam 
-  ? (sceneParam.endsWith('.json') ? sceneParam : `${sceneParam}.json`) 
-  : 's1_1_01.json';
+const initialScene = sceneParam || '1-1/01';
 
 loadScene(initialScene);

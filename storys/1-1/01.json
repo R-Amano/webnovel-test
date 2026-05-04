@@ -1,0 +1,20 @@
+{
+  "ra_scene_container":{
+    "meta":{
+      "back_id":"1-1/01"
+    },
+    "background":"../assets/img/scene/test.jpg",
+    "panels":{
+      "property":"character",
+      "url":"../assets/img/chara/rait1.png"
+    },
+    "texts":{
+      "name":"レイト",
+      "text":["よう！\n元気か？\n久しぶりだな。","1-1/02"]
+    },
+    "transition":{
+      "color":"#000",
+      "duration":1
+    } 
+  }
+}

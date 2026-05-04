@@ -1,0 +1,17 @@
+{
+  "ra_scene_container":{
+    "meta":{
+      "back_id":"1-1/01"
+    },
+    "background":"../assets/img/scene/test.jpg",
+    "panels":{
+      "property":"character",
+      "url":"../assets/img/chara/rait3.png",
+      "emote":"../assets/img/emote/q.png"
+    },
+    "texts":{
+      "name":"レイト",
+      "text":["今の近況か？\nなんとかやってるぞ。じゃあな！","1-1/03"]
+    }
+  }
+}
