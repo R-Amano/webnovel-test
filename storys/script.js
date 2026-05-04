@@ -223,7 +223,7 @@ function initMenu() {
 
   // 前のシーンに戻る
   document.getElementById('menu-back-btn').onclick = () => {
-    const backId = state.currentSceneData?.ra_scene_container?.meta?.back_id;
+    const backId = state.currentSceneData?.ra_scene_container?.back_id;
     if (backId) {
       dialog.classList.add('hidden');
       loadScene(backId);

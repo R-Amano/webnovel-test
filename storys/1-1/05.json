@@ -1,8 +1,6 @@
 {
   "ra_scene_container":{
-    "meta":{
-      "back_id":"1-1/04"
-    },
+    "back_id":"1-1/04",
     "background":"../assets/img/scene/test.jpg",
     "panels":{
       "property":"character",
