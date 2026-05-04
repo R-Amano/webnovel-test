@@ -4,6 +4,7 @@
 
 // --- 設定・定数 ---
 const CONFIG = {
+  ASSET_BASE_PATH: '../assets/img/',
   DEFAULT_TYPING_SPEED: 30,
   PAUSE_CHARS: {
     '。': 500,
@@ -95,9 +96,17 @@ async function renderScene(data) {
   if (menuBtn) menuBtn.classList.remove('hidden');
 }
 
+/**
+ * アセットのフルパスを取得する
+ */
+function getAssetPath(path) {
+  return path ? CONFIG.ASSET_BASE_PATH + path : '';
+}
+
 function updateBackground(background) {
-  DOM.bg.style.backgroundImage = background ? `url(${background})` : 'none';
-  DOM.bg.style.backgroundColor = background ? '' : '#000';
+  const assetPath = getAssetPath(background);
+  DOM.bg.style.backgroundImage = assetPath ? `url(${assetPath})` : 'none';
+  DOM.bg.style.backgroundColor = assetPath ? '' : '#000';
 }
 
 function updatePanels(panels) {
@@ -109,16 +118,15 @@ function updatePanels(panels) {
 
   if (panels.emote) {
     const emoteImg = document.createElement('img');
-    emoteImg.src = panels.emote;
+    emoteImg.src = getAssetPath(panels.emote);
     emoteImg.className = 'emote-icon';
     container.appendChild(emoteImg);
   }
 
   const mainImg = document.createElement('img');
-  mainImg.src = panels.url;
+  mainImg.src = getAssetPath(panels.url);
   const prop = panels.property || 'character';
-  const ani = panels.animation || '';
-  mainImg.className = `panel type-${prop} ${ani}`;
+  mainImg.className = `panel type-${prop}`;
   container.appendChild(mainImg);
 
   DOM.panelLayer.appendChild(container);

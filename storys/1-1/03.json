@@ -1,11 +1,11 @@
 {
   "ra_scene_container":{
     "back_id":"1-1/02",
-    "background":"../assets/img/scene/1.jpg",
+    "background":"scene/1.jpg",
     "panels":{
       "property":"character",
-      "url":"../assets/img/chara/manabu1.png",
-      "emote":"../assets/img/emote/e.png"
+      "url":"chara/manabu1.png",
+      "emote":"emote/e.png"
     },
     "texts":{
       "name":"マナブ",

@@ -1,11 +1,11 @@
 {
   "ra_scene_container":{
     "back_id":"1-1/01",
-    "background":"../assets/img/scene/test.jpg",
+    "background":"scene/test.jpg",
     "panels":{
       "property":"character",
-      "url":"../assets/img/chara/rait3.png",
-      "emote":"../assets/img/emote/q.png"
+      "url":"chara/rait3.png",
+      "emote":"emote/q.png"
     },
     "texts":{
       "name":"レイト",
