@@ -69,7 +69,7 @@
         navigator.serviceWorker.register('sw.js')
           .then(reg => {
             console.log('Service Worker registered');
-            
+
             // Service Workerが準備できたらバージョンを要求する
             const requestVersion = () => {
               if (navigator.serviceWorker.controller) {
