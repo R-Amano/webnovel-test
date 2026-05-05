@@ -28,6 +28,7 @@
       </nav>
       <footer>
         <p>&copy; 2026 Ryosuke Amano. All rights reserved.</p>
+        <p id="app-version" style="opacity: 0.5; font-size: 0.7rem; margin-top: 5px;"></p>
       </footer>
     </div>
   </div>
@@ -66,8 +67,26 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('Service Worker registered'))
+          .then(reg => {
+            console.log('Service Worker registered');
+            
+            // Service Workerが準備できたらバージョンを要求する
+            const requestVersion = () => {
+              if (navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage({ type: 'GET_VERSION' });
+              }
+            };
+
+            navigator.serviceWorker.addEventListener('controllerchange', requestVersion);
+            requestVersion();
+          })
           .catch(err => console.log('Service Worker registration failed', err));
+      });
+
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'VERSION_INFO') {
+          document.getElementById('app-version').textContent = `System Version: ${event.data.version}`;
+        }
       });
     }
   </script>

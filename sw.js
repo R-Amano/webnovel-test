@@ -20,6 +20,13 @@ self.addEventListener('install', (event) => {
   );
 });
 
+// クライアントからのメッセージに応答する
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'GET_VERSION') {
+    event.source.postMessage({ type: 'VERSION_INFO', version: CACHE_NAME });
+  }
+});
+
 self.addEventListener('activate', (event) => {
   // 新しいバージョンが有効になったら古いキャッシュを削除する
   event.waitUntil(
