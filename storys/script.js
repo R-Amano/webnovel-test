@@ -2,7 +2,6 @@
  * RA Engine - JSONキー構造に完全準拠したコントローラー
  */
 
-// --- 設定・定数 ---
 const CONFIG = {
   ASSET_BASE_PATH: '../assets/img/',
   DEFAULT_TYPING_SPEED: 30,
@@ -12,30 +11,30 @@ const CONFIG = {
   }
 };
 
-// --- DOM要素のキャッシュ ---
 const DOM = {
   bg: document.getElementById('background'),
   panelLayer: document.getElementById('panel-layer'),
   msgWin: document.getElementById('message-window'),
   nameTag: document.getElementById('name-tag'),
   textArea: document.getElementById('text-area'),
-  transLayer: document.getElementById('transition-layer')
+  transLayer: document.getElementById('transition-layer'),
+  tapLayer: null // initMenu内で生成
 };
 
-// --- エンジン状態 ---
 const state = {
   currentTypingTimer: null,
   isTyping: false,
   currentFullText: "",
-  currentSceneData: null, // 現在のシーン情報を保持
-  metaData: null, // meta.jsonの情報を保持
-  currentTexts: null // 現在のテキスト情報を保持
+  currentSceneData: null,
+  metaData: null,
+  currentTexts: null
 };
 
-/**
- * モバイル端末での表示高さ（vh）を正しく計算する
- * 特にiOS PWAの初回起動時のズレを解消します
- */
+// ==========================================
+// 1. 初期設定・ユーティリティ
+// ==========================================
+
+/** モバイル端末での表示高さ（vh）を正しく計算 */
 function adjustViewport() {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -43,28 +42,28 @@ function adjustViewport() {
 
 window.addEventListener('resize', adjustViewport);
 window.addEventListener('orientationchange', adjustViewport);
-// 初期実行（少し遅らせることでPWAの起動タイミングに合わせる）
 setTimeout(adjustViewport, 100);
 
-/**
- * 画像をプリロードする
- */
+/** アセットのフルパスを取得 */
+function getAssetPath(path) {
+  return path ? CONFIG.ASSET_BASE_PATH + path : '';
+}
+
+/** 画像をプリロード */
 function preloadImage(url) {
   return new Promise((resolve) => {
-    if (!url) {
-      resolve();
-      return;
-    }
+    if (!url) return resolve();
     const img = new Image();
     img.src = url;
     img.onload = resolve;
-    img.onerror = resolve; // エラー時も進行を止めない
+    img.onerror = resolve;
   });
 }
 
-/**
- * メタデータを読み込む
- */
+// ==========================================
+// 2. データロード関連
+// ==========================================
+
 async function loadMetaData() {
   try {
     const response = await fetch('meta.json');
@@ -74,13 +73,9 @@ async function loadMetaData() {
   }
 }
 
-/**
- * 左上のストーリー情報を更新する
- */
 function updateStoryInfoUI(jsonPath) {
   if (!state.metaData) return;
 
-  // "1-1/01" のような形式からIDとシーン番号を抽出
   const [storyId, sceneFile] = jsonPath.replace('.json', '').split('/');
   const sceneNum = parseInt(sceneFile, 10);
 
@@ -91,89 +86,73 @@ function updateStoryInfoUI(jsonPath) {
   }
 }
 
-/**
- * シーンJSONをロードする
- */
 async function loadScene(jsonPath) {
-  // .json が含まれていない場合は自動で付与する
   const finalPath = jsonPath.endsWith('.json') ? jsonPath : `${jsonPath}.json`;
   console.log("Loading scene:", finalPath);
 
   try {
-    if (!state.metaData) await loadMetaData(); // 初回のみメタ読み込み
+    if (!state.metaData) await loadMetaData();
     updateStoryInfoUI(jsonPath);
 
     const response = await fetch(finalPath);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
-    state.currentSceneData = data; // データを保存
+    state.currentSceneData = data;
     renderScene(data);
   } catch (error) {
     console.error("Failed to load scene:", error);
   }
 }
 
-/**
- * シーンを描画する
- */
+// ==========================================
+// 3. 描画・演出エンジン
+// ==========================================
+
 async function renderScene(data) {
   const root = data.ra_scene_container;
   if (!root) return;
 
-  // 暗転（トランジション）開始時にメニューボタンを隠す
   const menuBtn = document.getElementById('menu-hamburger');
   if (menuBtn) menuBtn.classList.add('hidden');
 
-  // --- 新しいシーンの描画前に、メッセージウィンドウとテキストをクリアし、非表示にする ---
-  DOM.textArea.textContent = ''; // テキストエリアの内容を即座にクリア
-  DOM.msgWin.classList.add('hidden'); // メッセージウィンドウを非表示にする
-  if (state.currentTypingTimer) { // 進行中のタイピングがあれば停止
+  // UIクリーンアップ
+  DOM.textArea.textContent = '';
+  DOM.msgWin.classList.add('hidden');
+  if (state.currentTypingTimer) {
     clearTimeout(state.currentTypingTimer);
     state.currentTypingTimer = null;
     state.isTyping = false;
   }
-  // --- クリーンアップ終了 ---
 
-  // プリロード対象のURLを取得
   const bgUrl = getAssetPath(root.background);
   const panelUrl = root.panels?.url ? getAssetPath(root.panels.url) : null;
   const emoteUrl = root.panels?.emote ? getAssetPath(root.panels.emote) : null;
 
   if (root.transition) {
-    // 1. フェードアウト (透明 -> 黒) 1秒固定
     await handleTransition(0, 1, 1, root.transition.color);
-
-    // 2. 画面が完全に暗いうちに素材を読み込み・更新
     await Promise.all([preloadImage(bgUrl), preloadImage(panelUrl), preloadImage(emoteUrl)]);
-
     updateBackground(root.background);
     updatePanels(root.panels);
-
-    // 3. 真っ暗な状態を維持 (JSONで指定された秒数)
     await new Promise(resolve => setTimeout(resolve, (root.transition.duration || 0) * 1000));
-
-    // 4. フェードイン (黒 -> 透明) 1秒固定
     await handleTransition(1, 0, 1, root.transition.color);
   } else {
-    // トランジション指定がない場合も、読み込みを待ってから切り替える
     await Promise.all([preloadImage(bgUrl), preloadImage(panelUrl), preloadImage(emoteUrl)]);
-
     updateBackground(root.background);
     updatePanels(root.panels);
     DOM.transLayer.style.opacity = 0;
   }
 
   updateTexts(root.texts);
-
-  // シーンの準備が整ったらメニューボタンを再表示する
   if (menuBtn) menuBtn.classList.remove('hidden');
 }
 
-/**
- * アセットのフルパスを取得する
- */
-function getAssetPath(path) {
-  return path ? CONFIG.ASSET_BASE_PATH + path : '';
+function handleTransition(start, end, duration, color) {
+  DOM.transLayer.style.backgroundColor = color || '#000';
+  const anim = DOM.transLayer.animate(
+    [{ opacity: start }, { opacity: end }],
+    { duration: duration * 1000, fill: 'forwards' }
+  );
+  return anim.finished;
 }
 
 function updateBackground(background) {
@@ -207,64 +186,26 @@ function updatePanels(panels) {
 
 function updateTexts(texts) {
   state.currentTexts = texts;
-  const tapLayer = document.getElementById('tap-layer');
-
+  
   if (!texts) {
     DOM.msgWin.classList.add('hidden');
-    if (tapLayer) tapLayer.classList.add('hidden');
+    if (DOM.tapLayer) DOM.tapLayer.classList.add('hidden');
     return;
   }
 
   DOM.msgWin.classList.remove('hidden');
-  if (tapLayer) tapLayer.classList.remove('hidden');
-  state.currentFullText = texts.text?.[0] || "";
+  if (DOM.tapLayer) DOM.tapLayer.classList.remove('hidden');
 
-  // 名前タグの表示
+  state.currentFullText = texts.text?.[0] || "";
   DOM.nameTag.textContent = texts.name || "";
   DOM.nameTag.classList.toggle('hidden', !texts.name);
 
-  // セリフのタイピング開始
   typeText(DOM.textArea, state.currentFullText);
 }
 
-/**
- * ストーリーを進行させる（タイピングのスキップまたは次のシーンへ）
- */
-async function handleStoryProgress() {
-  const texts = state.currentTexts;
-  if (!texts) return;
-
-  if (state.isTyping) {
-    skipTyping(DOM.textArea, state.currentFullText);
-    return;
-  }
-
-  if (texts.text?.[1]) { // 次のシーンが指定されている場合
-    if (texts.text[1] === "end") {
-      // "end" が指定された場合は、UIを隠してから暗転し、シナリオ選択ページへ遷移
-      DOM.msgWin.classList.add('hidden');
-      const menuBtn = document.getElementById('menu-hamburger');
-      if (menuBtn) menuBtn.classList.add('hidden');
-
-      await handleTransition(0, 1, 1, '#000'); // 1秒かけて黒にフェードアウト
-      window.location.href = '../index.html'; // シナリオ選択ページへリダイレクト
-    } else {
-      loadScene(texts.text[1]); // 通常のシーンロード
-    }
-  }
-}
-
-/**
- * 指定した不透明度へのアニメーションを実行する
- */
-function handleTransition(start, end, duration, color) {
-  DOM.transLayer.style.backgroundColor = color || '#000';
-  const anim = DOM.transLayer.animate(
-    [{ opacity: start }, { opacity: end }],
-    { duration: duration * 1000, fill: 'forwards' }
-  );
-  return anim.finished;
-}
+// ==========================================
+// 4. テキストタイピング制御
+// ==========================================
 
 function typeText(element, text, speed = CONFIG.DEFAULT_TYPING_SPEED) {
   if (state.currentTypingTimer) clearTimeout(state.currentTypingTimer);
@@ -293,48 +234,59 @@ function skipTyping(element, fullText) {
   state.currentTypingTimer = null;
 }
 
-/**
- * 設定メニュー（ハンバーガーメニュー）の初期化
- */
+// ==========================================
+// 5. ストーリー進行ロジック
+// ==========================================
+
+async function handleStoryProgress() {
+  const texts = state.currentTexts;
+  if (!texts) return;
+
+  if (state.isTyping) {
+    skipTyping(DOM.textArea, state.currentFullText);
+    return;
+  }
+
+  if (texts.text?.[1]) {
+    if (texts.text[1] === "end") {
+      DOM.msgWin.classList.add('hidden');
+      const menuBtn = document.getElementById('menu-hamburger');
+      if (menuBtn) menuBtn.classList.add('hidden');
+      await handleTransition(0, 1, 1, '#000');
+      window.location.href = '../index.html';
+    } else {
+      loadScene(texts.text[1]);
+    }
+  }
+}
+
+// ==========================================
+// 6. メニュー・ユーザーインターフェース
+// ==========================================
+
 function initMenu() {
   // 全面タップ用のレイヤー作成
-  const tapLayer = document.createElement('div');
-  tapLayer.id = 'tap-layer';
-  tapLayer.className = 'hidden';
-  // メッセージウィンドウ(z-index:100想定)より背面に配置
-  Object.assign(tapLayer.style, {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    zIndex: '50',
-    backgroundColor: 'transparent'
-  });
-  document.body.appendChild(tapLayer);
+  DOM.tapLayer = document.createElement('div');
+  DOM.tapLayer.id = 'tap-layer';
+  DOM.tapLayer.className = 'hidden';
+  Object.assign(DOM.tapLayer.style, { position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: '50', backgroundColor: 'transparent' });
+  document.body.appendChild(DOM.tapLayer);
 
-  // ストーリー進行の共通ハンドラ
   const handleTap = (e) => {
     e.stopPropagation();
-    // メニュー表示中、または演出中（ハンバーガー非表示）は進行させない
     const dialog = document.getElementById('menu-dialog');
     const menuBtn = document.getElementById('menu-hamburger');
-    if (dialog && !dialog.classList.contains('hidden')) return;
-    if (menuBtn && menuBtn.classList.contains('hidden')) return;
-    
+    if ((dialog && !dialog.classList.contains('hidden')) || (menuBtn && menuBtn.classList.contains('hidden'))) return;
     handleStoryProgress();
   };
-
-  tapLayer.onclick = handleTap;
+  DOM.tapLayer.onclick = handleTap;
   DOM.msgWin.onclick = handleTap;
 
-  // ハンバーガーアイコン作成
   const btn = document.createElement('div');
   btn.id = 'menu-hamburger';
-  btn.innerHTML = '&#9776;'; // 三本線
+  btn.innerHTML = '&#9776;';
   document.body.appendChild(btn);
 
-  // ダイアログ作成
   const dialog = document.createElement('div');
   dialog.id = 'menu-dialog';
   dialog.className = 'hidden';
@@ -347,24 +299,18 @@ function initMenu() {
   `;
   document.body.appendChild(dialog);
 
-  // イベント登録
   btn.onclick = (e) => {
-    e.stopPropagation(); // グローバルな進行クリックを防止
+    e.stopPropagation();
     dialog.classList.remove('hidden');
   };
-  
   document.getElementById('menu-close-btn').onclick = (e) => {
     e.stopPropagation();
     dialog.classList.add('hidden');
   };
-
-  // シナリオ選択に戻る
   document.getElementById('menu-home-btn').onclick = (e) => {
     e.stopPropagation();
     window.location.href = '../index.html';
   };
-
-  // 前のシーンに戻る
   document.getElementById('menu-back-btn').onclick = (e) => {
     e.stopPropagation();
     const backId = state.currentSceneData?.ra_scene_container?.back_id;
@@ -375,15 +321,14 @@ function initMenu() {
       alert("前のシーンが設定されていません。");
     }
   };
-
 }
 
-// メニュー初期化
+// ==========================================
+// 7. エントリーポイント（実行開始）
+// ==========================================
+
 initMenu();
 
-/**
- * URLパラメータ (?scene=xxx) から初期シーンを特定してロードする
- */
 const urlParams = new URLSearchParams(window.location.search);
 const sceneParam = urlParams.get('scene');
 const initialScene = sceneParam || '1-1/01';
