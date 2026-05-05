@@ -1,21 +1,28 @@
 {
-  "name": "Web Novel Title",
-  "short_name": "WebNovel",
+  "id": "/",
+  "name": "鉄アドGO! ~研修編~ ウェブアーカイヴ版",
+  "short_name": "鉄アドGO!",
   "description": "ウェブ小説のアーカイブ版",
-  "start_url": "index.html",
+  "lang": "ja",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#1a1a1a",
   "theme_color": "#1a1a1a",
+  "categories": ["books", "entertainment"],
   "icons": [
     {
       "src": "assets/img/icon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "assets/img/icon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
