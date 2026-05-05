@@ -28,7 +28,8 @@ const state = {
   isTyping: false,
   currentFullText: "",
   currentSceneData: null, // 現在のシーン情報を保持
-  metaData: null // meta.jsonの情報を保持
+  metaData: null, // meta.jsonの情報を保持
+  currentTexts: null // 現在のテキスト情報を保持
 };
 
 /**
@@ -205,12 +206,17 @@ function updatePanels(panels) {
 }
 
 function updateTexts(texts) {
+  state.currentTexts = texts;
+  const tapLayer = document.getElementById('tap-layer');
+
   if (!texts) {
     DOM.msgWin.classList.add('hidden');
+    if (tapLayer) tapLayer.classList.add('hidden');
     return;
   }
 
   DOM.msgWin.classList.remove('hidden');
+  if (tapLayer) tapLayer.classList.remove('hidden');
   state.currentFullText = texts.text?.[0] || "";
 
   // 名前タグの表示
@@ -219,30 +225,33 @@ function updateTexts(texts) {
 
   // セリフのタイピング開始
   typeText(DOM.textArea, state.currentFullText);
+}
 
-  // クリックイベントの再設定
-  DOM.msgWin.onclick = async (e) => {
-    e.stopPropagation();
+/**
+ * ストーリーを進行させる（タイピングのスキップまたは次のシーンへ）
+ */
+async function handleStoryProgress() {
+  const texts = state.currentTexts;
+  if (!texts) return;
 
-    if (state.isTyping) {
-      skipTyping(DOM.textArea, state.currentFullText);
-      return;
+  if (state.isTyping) {
+    skipTyping(DOM.textArea, state.currentFullText);
+    return;
+  }
+
+  if (texts.text?.[1]) { // 次のシーンが指定されている場合
+    if (texts.text[1] === "end") {
+      // "end" が指定された場合は、UIを隠してから暗転し、シナリオ選択ページへ遷移
+      DOM.msgWin.classList.add('hidden');
+      const menuBtn = document.getElementById('menu-hamburger');
+      if (menuBtn) menuBtn.classList.add('hidden');
+
+      await handleTransition(0, 1, 1, '#000'); // 1秒かけて黒にフェードアウト
+      window.location.href = '../index.html'; // シナリオ選択ページへリダイレクト
+    } else {
+      loadScene(texts.text[1]); // 通常のシーンロード
     }
-
-    if (texts.text?.[1]) { // 次のシーンが指定されている場合
-      if (texts.text[1] === "end") {
-        // "end" が指定された場合は、UIを隠してから暗転し、シナリオ選択ページへ遷移
-        DOM.msgWin.classList.add('hidden');
-        const menuBtn = document.getElementById('menu-hamburger');
-        if (menuBtn) menuBtn.classList.add('hidden');
-
-        await handleTransition(0, 1, 1, '#000'); // 1秒かけて黒にフェードアウト
-        window.location.href = '../index.html'; // シナリオ選択ページへリダイレクト
-      } else {
-        loadScene(texts.text[1]); // 通常のシーンロード
-      }
-    }
-  };
+  }
 }
 
 /**
@@ -288,6 +297,37 @@ function skipTyping(element, fullText) {
  * 設定メニュー（ハンバーガーメニュー）の初期化
  */
 function initMenu() {
+  // 全面タップ用のレイヤー作成
+  const tapLayer = document.createElement('div');
+  tapLayer.id = 'tap-layer';
+  tapLayer.className = 'hidden';
+  // メッセージウィンドウ(z-index:100想定)より背面に配置
+  Object.assign(tapLayer.style, {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: '50',
+    backgroundColor: 'transparent'
+  });
+  document.body.appendChild(tapLayer);
+
+  // ストーリー進行の共通ハンドラ
+  const handleTap = (e) => {
+    e.stopPropagation();
+    // メニュー表示中、または演出中（ハンバーガー非表示）は進行させない
+    const dialog = document.getElementById('menu-dialog');
+    const menuBtn = document.getElementById('menu-hamburger');
+    if (dialog && !dialog.classList.contains('hidden')) return;
+    if (menuBtn && menuBtn.classList.contains('hidden')) return;
+    
+    handleStoryProgress();
+  };
+
+  tapLayer.onclick = handleTap;
+  DOM.msgWin.onclick = handleTap;
+
   // ハンバーガーアイコン作成
   const btn = document.createElement('div');
   btn.id = 'menu-hamburger';
@@ -308,17 +348,25 @@ function initMenu() {
   document.body.appendChild(dialog);
 
   // イベント登録
-  btn.onclick = () => dialog.classList.remove('hidden');
+  btn.onclick = (e) => {
+    e.stopPropagation(); // グローバルな進行クリックを防止
+    dialog.classList.remove('hidden');
+  };
   
-  document.getElementById('menu-close-btn').onclick = () => dialog.classList.add('hidden');
+  document.getElementById('menu-close-btn').onclick = (e) => {
+    e.stopPropagation();
+    dialog.classList.add('hidden');
+  };
 
   // シナリオ選択に戻る
-  document.getElementById('menu-home-btn').onclick = () => {
+  document.getElementById('menu-home-btn').onclick = (e) => {
+    e.stopPropagation();
     window.location.href = '../index.html';
   };
 
   // 前のシーンに戻る
-  document.getElementById('menu-back-btn').onclick = () => {
+  document.getElementById('menu-back-btn').onclick = (e) => {
+    e.stopPropagation();
     const backId = state.currentSceneData?.ra_scene_container?.back_id;
     if (backId) {
       dialog.classList.add('hidden');
