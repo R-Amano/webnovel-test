@@ -120,6 +120,7 @@ h2 {
 
 .episode-link {
   display: flex;
+  align-items: center;
   padding: 20px;
   color: #f0f0f0;
   text-decoration: none;
@@ -130,6 +131,13 @@ h2 {
 
 .episode-link:hover {
   background-color: #2a2a2a;
+}
+
+.read-icon {
+  width: 24px; /* アイコンの大きさ */
+  margin-left: auto; /* これだけで自動的に一番右端へ移動します */
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .ep-number {
