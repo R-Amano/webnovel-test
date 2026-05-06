@@ -17,6 +17,35 @@
 </head>
 
 <body>
+  <div class="stone-counter" onclick="openStoneDialog()">
+    <img src="assets/img/panel/stone_1.png" alt="Stone">
+    <span id="stone-count">0</span>
+  </div>
+
+  <!-- 石の説明ダイアログ -->
+  <div id="stone-dialog" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3>ストーリーの石</h3>
+      <p class="stone-description">
+        この輝く石は、物語を最後まで読み終えた証です。獲得した石は灰色のアイコンから虹色へと変化します。たくさん集めてみましょう。
+      </p>
+      <button class="btn-reset" onclick="openConfirmDialog()">データをリセットする</button>
+      <button class="btn-close-modal" onclick="closeStoneDialog()">閉じる</button>
+    </div>
+  </div>
+
+  <!-- リセット確認ダイアログ -->
+  <div id="confirm-dialog" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3>データのリセット</h3>
+      <p class="stone-description">
+        全ての進行状況（石の数、既読状態）を完全に削除します。よろしいですか？<br>※この操作は取り消せません。
+      </p>
+      <button class="btn-reset" onclick="executeReset()">削除を実行する</button>
+      <button class="btn-close-modal" onclick="closeConfirmDialog()">キャンセル</button>
+    </div>
+  </div>
+
   <div class="hero">
     <img src="assets/img/title.png" alt="Title Logo" class="main-logo">
 
@@ -39,6 +68,14 @@
     // 画像などのドラッグを無効化
     document.addEventListener('dragstart', e => e.preventDefault());
 
+    // ローカルストレージから石の数と既読情報を取得（初期値の設定）
+    const totalStones = localStorage.getItem('ra_stone_count') || '0';
+    document.getElementById('stone-count').textContent = totalStones;
+
+    // 既読済みIDのリストを取得 (例: ["scene1", "scene2"])
+    const readStoriesJson = localStorage.getItem('ra_read_stories');
+    const readStories = readStoriesJson ? JSON.parse(readStoriesJson) : [];
+
     // meta.jsonを読み込んでストーリーリストを生成
     fetch('storys/meta.json')
       .then(response => response.json())
@@ -52,11 +89,15 @@
           const epNum = parts[0] || '';
           const epTitle = parts[1] || '';
 
+          // 既読かどうかを判定
+          const isRead = readStories.includes(item.id);
+          const iconSrc = isRead ? 'assets/img/panel/stone_2.png' : 'assets/img/panel/stone_1.png';
+
           li.innerHTML = `
                         <div class="episode-link" onclick="location.href='storys/index.html?scene=${item.id}/01'">
                             <span class="ep-number">${epNum}</span>
                             <span class="ep-title">${epTitle}</span>
-                            <img src="assets/img/panel/stone_1.png" class="read-icon">
+                            <img src="${iconSrc}" class="read-icon">
                         </div>
                     `;
           list.appendChild(li);
@@ -89,6 +130,31 @@
           document.getElementById('app-version').textContent = `System Version: ${event.data.version}`;
         }
       });
+    }
+
+    // 石ダイアログの制御
+    function openStoneDialog() {
+      document.getElementById('stone-dialog').classList.remove('hidden');
+    }
+
+    function closeStoneDialog() {
+      document.getElementById('stone-dialog').classList.add('hidden');
+    }
+
+    // リセット確認ダイアログの制御
+    function openConfirmDialog() {
+      document.getElementById('stone-dialog').classList.add('hidden');
+      document.getElementById('confirm-dialog').classList.remove('hidden');
+    }
+
+    function closeConfirmDialog() {
+      document.getElementById('confirm-dialog').classList.add('hidden');
+    }
+
+    // リセットの実行
+    function executeReset() {
+      localStorage.clear();
+      location.reload();
     }
   </script>
 </body>
