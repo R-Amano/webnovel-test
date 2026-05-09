@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  height: 100svh;
+  overflow: hidden;
+  touch-action: none;
+  background: url('../assets/img/thumb.jpg') center / cover no-repeat;
+  display: grid;
+  gap: 20px;
+  place-content: center;
+}
+
+.box-1 {
+  width: 90vw; /* 狭い画面でのデフォルト幅 */
+  height: 45svh; /* 狭い画面でのデフォルト高さ */
+  background-color: rgba(255, 0, 0, 0.6); /* わかりやすい赤 */
+}
+
+.box-2 {
+  width: 90vw; /* 狭い画面でのデフォルト幅 */
+  height: 45svh; /* 狭い画面でのデフォルト高さ */
+  background-color: rgba(0, 0, 255, 0.6); /* わかりやすい青 */
+}
+
+/* 画面幅が768px以上の場合に適用 */
+@media (min-width: 768px) {
+  body {
+    grid-template-columns: 1fr 1fr; /* 2つの等しい幅の列を作成 */
+  }
+  .box-1, .box-2 {
+    width: auto; /* グリッドが幅を管理 */
+    height: 80svh; /* 広い画面での高さ */
+    max-width: 40vw; /* 各ボックスが画面幅の45%を超えないように制限 */
+  }
+}
