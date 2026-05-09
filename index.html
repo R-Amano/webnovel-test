@@ -22,6 +22,10 @@
     <span id="stone-count">0</span>
   </div>
 
+  <div class="stone-counter" style="left: 115px; cursor: pointer; justify-content: center;" onclick="forceUpdate()">
+    <span>更新</span>
+  </div>
+
   <!-- 石の説明ダイアログ -->
   <div id="stone-dialog" class="modal-overlay hidden">
     <div class="modal-content">
@@ -61,7 +65,7 @@
         </ul>
       </nav>
       <footer>
-        <p>&copy; 2026 Ryosuke Amano. All rights reserved.</p>
+        <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2026 Ryosuke Amano. All rights reserved.</p>
         <p id="app-version" style="opacity: 0.5; font-size: 0.7rem; margin-top: 5px;"></p>
       </footer>
     </div>
@@ -160,6 +164,27 @@
       localStorage.removeItem('ra_stone_count');
       localStorage.removeItem('ra_read_stories');
       location.reload();
+    }
+
+    // キャッシュをクリアして強制的に最新データを再取得する
+    async function forceUpdate() {
+      try {
+        // キャッシュストレージを全て削除
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(key => caches.delete(key)));
+        }
+        // 登録されているService Workerを解除
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for (const registration of registrations) await registration.unregister();
+        }
+        // ページをリロード（サーバーから最新を読み込む）
+        window.location.reload();
+      } catch (e) {
+        console.error('Update failed:', e);
+        window.location.reload();
+      }
     }
   </script>
 </body>
