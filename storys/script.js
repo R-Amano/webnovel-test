@@ -249,6 +249,24 @@ async function handleStoryProgress() {
 
   if (texts.text?.[1]) {
     if (texts.text[1] === "end") {
+      // 既読処理と記憶の宝跡（石）の付与
+      const urlParams = new URLSearchParams(window.location.search);
+      const sceneParam = urlParams.get('scene') || '1-1/01';
+      const storyId = sceneParam.split('/')[0];
+
+      const readStoriesJson = localStorage.getItem('ra_read_stories');
+      let readStories = readStoriesJson ? JSON.parse(readStoriesJson) : [];
+
+      // まだ既読でない場合のみ、既読リストに追加して石を+1する
+      if (!readStories.includes(storyId)) {
+        readStories.push(storyId);
+        localStorage.setItem('ra_read_stories', JSON.stringify(readStories));
+
+        // 石のカウントを+1
+        const currentStones = parseInt(localStorage.getItem('ra_stone_count') || '0', 10);
+        localStorage.setItem('ra_stone_count', (currentStones + 1).toString());
+      }
+
       DOM.msgWin.classList.add('hidden');
       const menuBtn = document.getElementById('menu-hamburger');
       if (menuBtn) menuBtn.classList.add('hidden');
@@ -263,6 +281,11 @@ async function handleStoryProgress() {
 // ==========================================
 // 6. メニュー・ユーザーインターフェース
 // ==========================================
+
+// 右クリックメニュー（長押しメニュー）を無効化
+document.addEventListener('contextmenu', e => e.preventDefault());
+// 画像などのドラッグを無効化
+document.addEventListener('dragstart', e => e.preventDefault());
 
 function initMenu() {
   // 全面タップ用のレイヤー作成

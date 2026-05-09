@@ -159,15 +159,35 @@ h2 {
   border: 1px solid #444;
 }
 
+.stone-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.dialog-stone-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.stone-dialog-text h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
 .modal-content h3 {
-  margin-top: 0;
   color: #fff;
 }
 
 .stone-description {
   font-size: 0.9rem;
   color: #ccc;
-  margin-bottom: 25px;
+  margin: 5px 0 0 0;
   line-height: 1.6;
 }
 
