@@ -14,16 +14,38 @@
   <title>鉄アドGO! - ウェブアーカイヴ</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&display=swap" rel="stylesheet">
+  <style>
+    .top-controls {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      gap: 10px; /* ボタン同士の間隔を一律に設定 */
+      z-index: 100;
+    }
+    /* style.css で定義されている個別の絶対配置をリセット */
+    .top-controls .stone-counter {
+      position: relative !important;
+      left: auto !important;
+      margin: 0;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="stone-counter" onclick="openStoneDialog()">
-    <img src="assets/img/panel/stone_1.png" alt="Stone">
-    <span id="stone-count">0</span>
-  </div>
+  <div class="top-controls">
+    <div class="stone-counter" onclick="openStoneDialog()">
+      <img src="assets/img/panel/stone_1.png" alt="Stone">
+      <span id="stone-count">0</span>
+    </div>
 
-  <div class="stone-counter" style="left: 115px; cursor: pointer; justify-content: center;" onclick="forceUpdate()">
-    <span>更新</span>
+    <div class="stone-counter" style="cursor: pointer; justify-content: center;" onclick="forceUpdate()">
+      <span>更新</span>
+    </div>
+
+    <div class="stone-counter" style="cursor: pointer; justify-content: center;" onclick="shareUrl()">
+      <span>共有</span>
+    </div>
   </div>
 
   <!-- 石の説明ダイアログ -->
@@ -191,6 +213,16 @@
         console.error('Update failed:', e);
         window.location.reload();
       }
+    }
+
+    // URLをクリップボードにコピーする
+    function shareUrl() {
+      const url = 'https://r-amano.github.io/webnovel-test/';
+      navigator.clipboard.writeText(url).then(() => {
+        alert('URLをクリップボードにコピーしました！');
+      }).catch(err => {
+        console.error('コピーに失敗しました:', err);
+      });
     }
   </script>
 </body>
