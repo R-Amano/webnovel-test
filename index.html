@@ -122,8 +122,14 @@
 
             // Service Workerが準備できたらバージョンを要求する
             const requestVersion = () => {
-              if (navigator.serviceWorker.controller) {
-                navigator.serviceWorker.controller.postMessage({ type: 'GET_VERSION' });
+              const controller = navigator.serviceWorker.controller;
+              if (controller) {
+                controller.postMessage({ type: 'GET_VERSION' });
+              } else {
+                // 更新直後などでコントローラーが未確立の場合は、準備完了を待ってからアクティブなWorkerに送信
+                navigator.serviceWorker.ready.then(registration => {
+                  if (registration.active) registration.active.postMessage({ type: 'GET_VERSION' });
+                });
               }
             };
 

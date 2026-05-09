@@ -271,7 +271,7 @@ async function handleStoryProgress() {
       const menuBtn = document.getElementById('menu-hamburger');
       if (menuBtn) menuBtn.classList.add('hidden');
       await handleTransition(0, 1, 1, '#000');
-      window.location.href = '../index.html';
+      window.location.replace('../index.html');
     } else {
       loadScene(texts.text[1]);
     }
@@ -332,7 +332,7 @@ function initMenu() {
   };
   document.getElementById('menu-home-btn').onclick = (e) => {
     e.stopPropagation();
-    window.location.href = '../index.html';
+    window.location.replace('../index.html');
   };
   document.getElementById('menu-back-btn').onclick = (e) => {
     e.stopPropagation();
