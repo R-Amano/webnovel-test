@@ -123,17 +123,14 @@ body {
 /* UI Elements */
 .top-controls {
   position: fixed;
-  top: 15px;
-  left: 15px;
+  top: calc(15px + env(safe-area-inset-top));
+  left: calc(15px + env(safe-area-inset-left));
   display: flex;
-  gap: 10px;
+  gap: 12px;
   z-index: 1000;
 }
 
 .stone-counter {
-  position: fixed;
-  top: 20px;
-  left: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,11 +141,6 @@ body {
   border: 1px solid var(--border-color);
   cursor: pointer;
   transition: all var(--transition-speed);
-}
-
-.top-controls .stone-counter {
-  position: static;
-  margin: 0;
 }
 
 .stone-counter:hover {
@@ -304,15 +296,16 @@ body {
 footer {
   margin-top: 20px;
   text-align: center;
-  padding: 10px 0;
+  padding: 10px 20px calc(10px + env(safe-area-inset-bottom));
   font-size: 0.8rem;
   color: var(--text-muted);
 }
 
 footer p {
-  opacity: 0.5;
+  opacity: 0.7;
   font-size: 0.7rem;
   margin: 0;
+  color: var(--text-muted);
 }
 
 #app-version {
