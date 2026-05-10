@@ -20,6 +20,7 @@
 
 html {
   height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -31,11 +32,11 @@ body {
   line-height: 1.8;
   overflow: hidden;
   user-select: none;
+  touch-action: none; /* ブラウザ独自のジェスチャーを抑制 */
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  height: 100vh;
-  height: 100svh; /* UIバーの変化に影響されない安定した高さ */
-  height: calc(var(--vh, 1vh) * 100);
+  height: 100%; /* 固定値を使用 */
+  height: 100svh; 
   width: 100vw;
   overscroll-behavior: none; /* バウンスによるUI出現を防止 */
 }
@@ -44,14 +45,14 @@ body {
    Layout
    ========================================== */
 .container {
-  max-width: 800px;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
-  padding: 40px 20px;
 }
 
 .hero {
-  position: fixed;
-  inset: 0;
+  height: 100%;
+  width: 100%;
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('assets/img/thumb.jpg') center/cover;
   display: flex;
   flex-direction: column;
