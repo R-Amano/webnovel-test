@@ -1,14 +1,16 @@
 const $ = id => document.getElementById(id);
 
-/** 表示高さ（vh）を計算し、画面回転時のみ更新する（ガクつき防止） */
-let lastOrient = window.orientation;
+/** モバイルでのガクつき（バーの出し入れ）を防ぎつつ、PCでの自由なリサイズに対応 */
+let lastWidth = window.innerWidth;
 function adjustViewport() {
-  const currentOrient = window.orientation;
-  // 初回実行、または向きが変わった時だけ計算
-  if (currentOrient !== lastOrient || !document.documentElement.style.getPropertyValue('--vh')) {
+  const currentWidth = window.innerWidth;
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+  // PC（マウス操作）なら常に更新し、スマホなら横幅の変化（回転）があった時のみ更新
+  if (!isTouch || currentWidth !== lastWidth || !document.documentElement.style.getPropertyValue('--vh')) {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
-    lastOrient = currentOrient;
+    lastWidth = currentWidth;
   }
 }
 window.addEventListener('resize', adjustViewport);
