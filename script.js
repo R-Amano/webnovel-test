@@ -1,21 +1,5 @@
 const $ = id => document.getElementById(id);
 
-/** モバイルでのガクつき（バーの出し入れ）を防ぎつつ、PCでの自由なリサイズに対応 */
-let lastWidth = window.innerWidth;
-function adjustViewport() {
-  const currentWidth = window.innerWidth;
-  const isTouch = window.matchMedia('(pointer: coarse)').matches;
-
-  // PC（マウス操作）なら常に更新し、スマホなら横幅の変化（回転）があった時のみ更新
-  if (!isTouch || currentWidth !== lastWidth || !document.documentElement.style.getPropertyValue('--vh')) {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-    lastWidth = currentWidth;
-  }
-}
-window.addEventListener('resize', adjustViewport);
-adjustViewport();
-
 ['contextmenu', 'dragstart'].forEach(ev => document.addEventListener(ev, e => e.preventDefault()));
 
 $('stone-count').textContent = localStorage.getItem('ra_stone_count') || '0';

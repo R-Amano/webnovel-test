@@ -34,22 +34,6 @@ const state = {
 // 1. 初期設定・ユーティリティ
 // ==========================================
 
-/** モバイル端末での表示高さ（vh）を正しく計算 */
-let lastWidth = window.innerWidth;
-function adjustViewport() {
-  // 通知バーの出現などで高さだけが変わった場合は再計算をスキップ（ガクつき防止）
-  // 画面の回転（横幅の変化）があった時のみ実行する
-  if (window.innerWidth === lastWidth) return;
-  lastWidth = window.innerWidth;
-
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-
-window.addEventListener('resize', adjustViewport);
-window.addEventListener('orientationchange', adjustViewport);
-setTimeout(adjustViewport, 100);
-
 /** アセットのフルパスを取得 */
 function getAssetPath(path) {
   return path ? CONFIG.ASSET_BASE_PATH + path : '';
