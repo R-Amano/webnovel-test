@@ -1,4 +1,19 @@
+/* ==========================================
+   Variables & Base
+   ========================================== */
+:root {
+  --bg-color: #1a1a1a;
+  --surface-color: rgba(0, 0, 0, 0.6);
+  --accent-color: #ffffff;
+  --text-main: #f0f0f0;
+  --text-muted: #aaaaaa;
+  --border-color: rgba(255, 255, 255, 0.15);
+  --transition-speed: 0.3s;
+  --font-serif: 'Shippori Mincho', serif;
+}
+
 * {
+  box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
@@ -6,9 +21,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Shippori Mincho', serif;
-  background-color: #1a1a1a;
-  color: #f0f0f0;
+  font-family: var(--font-serif);
+  background-color: var(--bg-color);
+  color: var(--text-main);
   line-height: 1.8;
   overflow: hidden;
   user-select: none;
@@ -19,6 +34,9 @@ body {
   width: 100vw;
 }
 
+/* ==========================================
+   Layout
+   ========================================== */
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -36,11 +54,15 @@ body {
   text-align: center;
 }
 
+/* ==========================================
+   Components
+   ========================================== */
 .menu-container {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 20px 40px;
+  background: var(--surface-color);
+  padding: 25px 40px;
   border-radius: 10px;
   backdrop-filter: blur(5px);
+  border: 1px solid var(--border-color);
   max-width: 420px;
   width: 75%;
   max-height: 50vh;
@@ -74,36 +96,31 @@ body {
 
 .tagline {
   font-size: 1.2rem;
-  margin-bottom: 30px;
-  color: #ccc;
+  margin-bottom: 40px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
 }
 
 .btn-start {
-  display: inline-block;
-  padding: 15px 40px;
-  background-color: #fff;
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 48px;
+  background-color: var(--accent-color);
   color: #000;
   text-decoration: none;
   font-weight: bold;
   border-radius: 5px;
-  transition: background 0.3s;
+  transition: all var(--transition-speed);
+  letter-spacing: 0.1em;
 }
 
 .btn-start:hover {
-  background-color: #ddd;
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-section {
-  margin-bottom: 60px;
-}
-
-h2 {
-  border-bottom: 1px solid #444;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-}
-
+/* UI Elements */
 .top-controls {
   position: fixed;
   top: 15px;
@@ -120,13 +137,13 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--surface-color);
   padding: 5px 15px;
   border-radius: 30px;
   backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border-color);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all var(--transition-speed);
 }
 
 .top-controls .stone-counter {
@@ -136,7 +153,7 @@ h2 {
 
 .stone-counter:hover {
   transform: scale(1.05);
-  background: rgba(40, 40, 40, 0.8);
+  background: rgba(60, 60, 60, 0.6);
 }
 
 .stone-counter img {
@@ -146,6 +163,9 @@ h2 {
   object-fit: contain;
 }
 
+/* ==========================================
+   Modals
+   ========================================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -164,7 +184,7 @@ h2 {
   max-width: 320px;
   width: 90%;
   text-align: center;
-  border: 1px solid #444;
+  border: 1px solid var(--border-color);
 }
 
 .stone-dialog-header {
@@ -194,11 +214,12 @@ h2 {
 
 .stone-description {
   font-size: 0.9rem;
-  color: #ccc;
+  color: var(--text-muted);
   margin: 5px 0 0 0;
   line-height: 1.6;
 }
 
+/* Buttons */
 .btn-reset {
   display: block;
   width: 100%;
@@ -210,7 +231,7 @@ h2 {
   cursor: pointer;
   margin-top: 20px;
   font-size: 0.8rem;
-  transition: all 0.2s;
+  transition: all var(--transition-speed);
 }
 
 .btn-reset:hover {
@@ -229,39 +250,38 @@ h2 {
   cursor: pointer;
   margin-top: 10px;
   font-size: 0.9rem;
-  transition: background 0.2s;
+  transition: background var(--transition-speed);
 }
 
 .btn-close-modal:hover {
   background: #555;
 }
 
-.hidden {
-  display: none !important;
-}
-
+/* ==========================================
+   Lists (Episodes)
+   ========================================== */
 .episode-list {
   list-style: none;
   padding: 0;
 }
 
 .episode-list li {
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .episode-link {
   display: flex;
   align-items: center;
   padding: 20px;
-  color: #f0f0f0;
+  color: var(--text-main);
   text-decoration: none;
-  transition: background 0.2s;
+  transition: background var(--transition-speed);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
 .episode-link:hover {
-  background-color: #2a2a2a;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .read-icon {
@@ -274,16 +294,19 @@ h2 {
 .ep-number {
   font-weight: bold;
   margin-right: 20px;
-  color: #aaa;
+  color: var(--text-muted);
   min-width: 60px;
 }
 
+/* ==========================================
+   Footer & Utilities
+   ========================================== */
 footer {
   margin-top: 20px;
   text-align: center;
   padding: 10px 0;
   font-size: 0.8rem;
-  color: #fff;
+  color: var(--text-muted);
 }
 
 footer p {
@@ -296,6 +319,13 @@ footer p {
   margin-top: 5px;
 }
 
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================
+   Responsive
+   ========================================== */
 @media screen and (orientation: landscape) and (max-height: 500px) {
   .hero {
     flex-direction: row;
