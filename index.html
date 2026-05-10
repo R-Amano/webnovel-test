@@ -3,17 +3,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>鉄アドGO! - ウェブアーカイヴ</title>
   <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/img/icon.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="鉄アドGO!">
-  <link rel="apple-touch-icon" href="assets/img/icon.png">
-  <title>鉄アドGO! - ウェブアーカイヴ</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&display=swap">
 </head>
 
 <body>
@@ -22,11 +21,9 @@
       <img src="assets/img/panel/stone_1.png" alt="Stone">
       <span id="stone-count">0</span>
     </div>
-
     <div class="stone-counter" onclick="forceUpdate()">
       <span>更新</span>
     </div>
-
     <div class="stone-counter" onclick="shareUrl()">
       <span>共有</span>
     </div>
@@ -61,11 +58,9 @@
 
   <div class="hero">
     <img src="assets/img/title.png" alt="Title Logo" class="main-logo">
-
     <div class="menu-container">
       <nav class="scenario-select">
-        <ul class="episode-list" id="story-list">
-        </ul>
+        <ul class="episode-list" id="story-list"></ul>
       </nav>
       <footer>
         <p>&copy; 2026 Ryosuke Amano. All rights reserved.</p>
