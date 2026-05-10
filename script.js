@@ -1,4 +1,19 @@
 const $ = id => document.getElementById(id);
+
+/** 表示高さ（vh）を計算し、画面回転時のみ更新する（ガクつき防止） */
+let lastOrient = window.orientation;
+function adjustViewport() {
+  const currentOrient = window.orientation;
+  // 初回実行、または向きが変わった時だけ計算
+  if (currentOrient !== lastOrient || !document.documentElement.style.getPropertyValue('--vh')) {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    lastOrient = currentOrient;
+  }
+}
+window.addEventListener('resize', adjustViewport);
+adjustViewport();
+
 ['contextmenu', 'dragstart'].forEach(ev => document.addEventListener(ev, e => e.preventDefault()));
 
 $('stone-count').textContent = localStorage.getItem('ra_stone_count') || '0';
