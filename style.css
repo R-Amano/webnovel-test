@@ -18,6 +18,10 @@
   outline: none;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -30,8 +34,10 @@ body {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   height: 100vh;
-  height: 100svh;
+  height: 100svh; /* UIバーの変化に影響されない安定した高さ */
+  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
+  overscroll-behavior: none; /* バウンスによるUI出現を防止 */
 }
 
 /* ==========================================
@@ -302,7 +308,7 @@ footer {
 }
 
 footer p {
-  opacity: 0.7;
+  opacity: 0.4; /* 白浮きを抑えるため透明度を調整 */
   font-size: 0.7rem;
   margin: 0;
   color: var(--text-muted);
