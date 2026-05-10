@@ -13,7 +13,7 @@ body {
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
-  -webkit-touch-callout: none; /* iOSでの長押しメニューを禁止 */
+  -webkit-touch-callout: none;
   height: 100vh;
   height: 100dvh;
   width: 100vw;
@@ -25,7 +25,6 @@ body {
   padding: 40px 20px;
 }
 
-/* Hero Section */
 .hero {
   position: fixed;
   inset: 0;
@@ -53,7 +52,6 @@ body {
   scrollbar-color: #555 rgba(0, 0, 0, 0);
 }
 
-/* スクロールバーのカスタマイズ (Chrome, Safari, Edge用) */
 .menu-container::-webkit-scrollbar {
   width: 6px;
 }
@@ -80,7 +78,6 @@ body {
   color: #ccc;
 }
 
-/* Buttons */
 .btn-start {
   display: inline-block;
   padding: 15px 40px;
@@ -96,7 +93,6 @@ body {
   background-color: #ddd;
 }
 
-/* Sections */
 section {
   margin-bottom: 60px;
 }
@@ -108,7 +104,6 @@ h2 {
   font-size: 1.8rem;
 }
 
-/* Stone Counter */
 .top-controls {
   position: fixed;
   top: 15px;
@@ -124,7 +119,7 @@ h2 {
   left: 20px;
   display: flex;
   align-items: center;
-  justify-content: center; /* 共通で中央揃えを適用 */
+  justify-content: center;
   background: rgba(0, 0, 0, 0.6);
   padding: 5px 15px;
   border-radius: 30px;
@@ -134,7 +129,6 @@ h2 {
   transition: transform 0.2s;
 }
 
-/* コンテナ内にある場合は配置を自動（Flexの子要素）にする */
 .top-controls .stone-counter {
   position: static;
   margin: 0;
@@ -152,7 +146,6 @@ h2 {
   object-fit: contain;
 }
 
-/* Stone Dialog */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -247,7 +240,6 @@ h2 {
   display: none !important;
 }
 
-/* Episode List */
 .episode-list {
   list-style: none;
   padding: 0;
@@ -273,8 +265,8 @@ h2 {
 }
 
 .read-icon {
-  width: 24px; /* アイコンの大きさ */
-  margin-left: auto; /* これだけで自動的に一番右端へ移動します */
+  width: 24px;
+  margin-left: auto;
   flex-shrink: 0;
   object-fit: contain;
 }
@@ -286,7 +278,6 @@ h2 {
   min-width: 60px;
 }
 
-/* Footer */
 footer {
   margin-top: 20px;
   text-align: center;
@@ -305,7 +296,6 @@ footer p {
   margin-top: 5px;
 }
 
-/* 横画面（ランドスケープ）用の調整 */
 @media screen and (orientation: landscape) and (max-height: 500px) {
   .hero {
     flex-direction: row;
@@ -329,7 +319,6 @@ footer p {
   }
 
   footer {
-    /* 横画面では場所を取るため非表示、またはさらに小さく */
     padding: 5px;
     font-size: 0.7rem;
   }
