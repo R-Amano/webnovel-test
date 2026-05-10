@@ -362,5 +362,6 @@ footer p {
     margin-bottom: 0;
     width: 100%;
     max-width: 450px;
+    max-height: 75svh;
   }
 }
