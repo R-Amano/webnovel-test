@@ -1,9 +1,19 @@
 const $ = id => document.getElementById(id);
 
+const STORAGE_KEYS = {
+  STONE_COUNT: 'ra_lgta_stone',
+  READ_STORIES: 'ra_lgta_read'
+};
+
 ['contextmenu', 'dragstart'].forEach(ev => document.addEventListener(ev, e => e.preventDefault()));
 
-$('stone-count').textContent = localStorage.getItem('ra_stone_count') || '0';
-const readStories = JSON.parse(localStorage.getItem('ra_read_stories') || '[]');
+// 戻るボタンなどでページが表示された際に最新の状態を反映する
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) location.reload();
+});
+
+$('stone-count').textContent = localStorage.getItem(STORAGE_KEYS.STONE_COUNT) || '0';
+const readStories = JSON.parse(localStorage.getItem(STORAGE_KEYS.READ_STORIES) || '[]');
 
 fetch('storys/meta.json')
   .then(r => r.json())
@@ -37,8 +47,8 @@ const closeStoneDialog = () => $('stone-dialog').classList.add('hidden');
 const openConfirmDialog = () => { closeStoneDialog(); $('confirm-dialog').classList.remove('hidden'); };
 const closeConfirmDialog = () => $('confirm-dialog').classList.add('hidden');
 const executeReset = () => {
-  localStorage.removeItem('ra_stone_count');
-  localStorage.removeItem('ra_read_stories');
+  localStorage.removeItem(STORAGE_KEYS.STONE_COUNT);
+  localStorage.removeItem(STORAGE_KEYS.READ_STORIES);
   location.reload();
 };
 

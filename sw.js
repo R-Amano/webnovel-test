@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lgta-0.1.13';
+const CACHE_NAME = 'lgta-0.1.14';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

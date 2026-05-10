@@ -11,6 +11,11 @@ const CONFIG = {
   }
 };
 
+const STORAGE_KEYS = {
+  STONE_COUNT: 'ra_lgta_stone',
+  READ_STORIES: 'ra_lgta_read'
+};
+
 const DOM = {
   bg: document.getElementById('background'),
   panelLayer: document.getElementById('panel-layer'),
@@ -244,17 +249,17 @@ async function handleStoryProgress() {
       const sceneParam = urlParams.get('scene') || '1-1/01';
       const storyId = sceneParam.split('/')[0];
 
-      const readStoriesJson = localStorage.getItem('ra_read_stories');
+      const readStoriesJson = localStorage.getItem(STORAGE_KEYS.READ_STORIES);
       let readStories = readStoriesJson ? JSON.parse(readStoriesJson) : [];
 
       // まだ既読でない場合のみ、既読リストに追加して石を+1する
       if (!readStories.includes(storyId)) {
         readStories.push(storyId);
-        localStorage.setItem('ra_read_stories', JSON.stringify(readStories));
+        localStorage.setItem(STORAGE_KEYS.READ_STORIES, JSON.stringify(readStories));
 
         // 石のカウントを+1
-        const currentStones = parseInt(localStorage.getItem('ra_stone_count') || '0', 10);
-        localStorage.setItem('ra_stone_count', (currentStones + 1).toString());
+        const currentStones = parseInt(localStorage.getItem(STORAGE_KEYS.STONE_COUNT) || '0', 10);
+        localStorage.setItem(STORAGE_KEYS.STONE_COUNT, (currentStones + 1).toString());
       }
 
       DOM.msgWin.classList.add('hidden');
