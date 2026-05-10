@@ -109,20 +109,35 @@ h2 {
 }
 
 /* Stone Counter */
+.top-controls {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
 .stone-counter {
   position: fixed;
   top: 20px;
   left: 20px;
   display: flex;
   align-items: center;
+  justify-content: center; /* 共通で中央揃えを適用 */
   background: rgba(0, 0, 0, 0.6);
   padding: 5px 15px;
   border-radius: 30px;
-  z-index: 1000;
   backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: transform 0.2s;
+}
+
+/* コンテナ内にある場合は配置を自動（Flexの子要素）にする */
+.top-controls .stone-counter {
+  position: static;
+  margin: 0;
 }
 
 .stone-counter:hover {
@@ -278,6 +293,16 @@ footer {
   padding: 10px 0;
   font-size: 0.8rem;
   color: #fff;
+}
+
+footer p {
+  opacity: 0.5;
+  font-size: 0.7rem;
+  margin: 0;
+}
+
+#app-version {
+  margin-top: 5px;
 }
 
 /* 横画面（ランドスケープ）用の調整 */

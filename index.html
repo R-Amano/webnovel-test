@@ -14,22 +14,6 @@
   <title>鉄アドGO! - ウェブアーカイヴ</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&display=swap" rel="stylesheet">
-  <style>
-    .top-controls {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      display: flex;
-      gap: 10px; /* ボタン同士の間隔を一律に設定 */
-      z-index: 100;
-    }
-    /* style.css で定義されている個別の絶対配置をリセット */
-    .top-controls .stone-counter {
-      position: relative !important;
-      left: auto !important;
-      margin: 0;
-    }
-  </style>
 </head>
 
 <body>
@@ -39,11 +23,11 @@
       <span id="stone-count">0</span>
     </div>
 
-    <div class="stone-counter" style="cursor: pointer; justify-content: center;" onclick="forceUpdate()">
+    <div class="stone-counter" onclick="forceUpdate()">
       <span>更新</span>
     </div>
 
-    <div class="stone-counter" style="cursor: pointer; justify-content: center;" onclick="shareUrl()">
+    <div class="stone-counter" onclick="shareUrl()">
       <span>共有</span>
     </div>
   </div>
@@ -87,8 +71,8 @@
         </ul>
       </nav>
       <footer>
-        <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2026 Ryosuke Amano. All rights reserved.</p>
-        <p id="app-version" style="opacity: 0.5; font-size: 0.7rem; margin-top: 5px;"></p>
+        <p>&copy; 2026 Ryosuke Amano. All rights reserved.</p>
+        <p id="app-version"></p>
       </footer>
     </div>
   </div>
