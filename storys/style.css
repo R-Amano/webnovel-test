@@ -289,3 +289,11 @@ html {
   flex-direction: column;
   gap: 20px;
 }
+
+/* 横長画面（スマホ横向き・デスクトップ）用の調整 */
+@media screen and (min-aspect-ratio: 1.3) {
+  #message-window {
+    /* 下の余白を狭く調整 */
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+}
