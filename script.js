@@ -58,4 +58,4 @@ async function forceUpdate() {
   location.reload();
 }
 
-const shareUrl = () => navigator.clipboard.writeText(location.href).then(() => alert('コピーしました'));
+const shareUrl = () => navigator.clipboard.writeText(location.href).then(() => alert('URLをコピーしました'));
