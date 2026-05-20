@@ -1,0 +1,17 @@
+{
+  "ra_scene_container": {
+    "back_id": "1-3/12",
+    "background": "scene/07.jpg",
+    "panels": {
+      "property": "character",
+      "url": "chara/rait2.png"
+    },
+    "texts": {
+      "name": "レイト",
+      "text": [
+        "心配はいらないぞ。研修生は君一人だから、100点取れるよう俺もしっかり指導してやる。",
+        "1-3/14"
+      ]
+    }
+  }
+}

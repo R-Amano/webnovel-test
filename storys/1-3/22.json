@@ -1,0 +1,13 @@
+{
+  "ra_scene_container": {
+    "back_id": "1-3/21",
+    "in_out": "out",
+    "background": "scene/07.jpg",
+    "texts": {
+      "name": "自分",
+      "text": [
+        "教えてくれてありがとうございます。"
+      ]
+    }
+  }
+}
