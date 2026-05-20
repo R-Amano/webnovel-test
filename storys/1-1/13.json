@@ -1,12 +1,12 @@
 {
   "ra_scene_container": {
     "back_id": "1-1/12",
+    "in_out": "out",
     "background": "scene/03.jpg",
     "texts": {
       "name": "自分",
       "text": [
-        "急いで研修所へ行こう！",
-        "end"
+        "急いで研修所へ行こう！"
       ]
     }
   }

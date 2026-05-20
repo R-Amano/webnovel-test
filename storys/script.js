@@ -110,6 +110,9 @@ async function renderScene(data) {
   const menuBtn = document.getElementById('menu-hamburger');
   if (menuBtn) menuBtn.classList.add('hidden');
   
+  // 前のシーンのアニメーションが残っている場合に備えてクリア
+  DOM.transLayer.getAnimations().forEach(anim => anim.cancel());
+
   // UIクリーンアップ
   DOM.textArea.textContent = '';
   DOM.msgWin.classList.add('hidden');
@@ -123,15 +126,26 @@ async function renderScene(data) {
   const panelUrl = root.panels?.url ? getAssetPath(root.panels.url) : null;
   const emoteUrl = root.panels?.emote ? getAssetPath(root.panels.emote) : null;
 
-  if (root.transition) {
+  // 画像のプリロードを完了させてから演出に入る
+  await Promise.all([preloadImage(bgUrl), preloadImage(panelUrl), preloadImage(emoteUrl)]);
+
+  if (root.in_out === "in") {
+    // 【開始演出】最初から真っ暗な状態で、裏で画像を差し替え、3秒待ってから1秒で明るくする
+    DOM.transLayer.style.backgroundColor = root.transition?.color || '#000';
+    DOM.transLayer.style.opacity = 1; 
+    updateBackground(root.background);
+    updatePanels(root.panels);
+    await new Promise(resolve => setTimeout(resolve, 2000)); // 待機時間を2秒に変更
+    await handleTransition(1, 0, 1, root.transition?.color || '#000');
+  } else if (root.transition) {
+    // 【通常の暗転】まず暗くして、真っ暗な間に画像を差し替え、指定時間待機後に明るくする
     await handleTransition(0, 1, 1, root.transition.color);
-    await Promise.all([preloadImage(bgUrl), preloadImage(panelUrl), preloadImage(emoteUrl)]);
     updateBackground(root.background);
     updatePanels(root.panels);
     await new Promise(resolve => setTimeout(resolve, (root.transition.duration || 0) * 1000));
     await handleTransition(1, 0, 1, root.transition.color);
   } else {
-    await Promise.all([preloadImage(bgUrl), preloadImage(panelUrl), preloadImage(emoteUrl)]);
+    // 【演出なし】即座に内容を更新
     updateBackground(root.background);
     updatePanels(root.panels);
     DOM.transLayer.style.opacity = 0;
@@ -247,34 +261,37 @@ async function handleStoryProgress() {
     return;
   }
 
-  if (texts.text?.[1]) {
-    if (texts.text[1] === "end") {
-      // 既読処理と記憶の宝跡（石）の付与
-      const urlParams = new URLSearchParams(window.location.search);
-      const sceneParam = urlParams.get('scene') || '1-1/01';
-      const storyId = sceneParam.split('/')[0];
+  // Check for "out" transition (story end)
+  const currentSceneRoot = state.currentSceneData?.ra_scene_container;
+  if (currentSceneRoot?.in_out === "out") {
+    // Same logic as previous "end"
+    const urlParams = new URLSearchParams(window.location.search);
+    const sceneParam = urlParams.get('scene') || '1-1/01'; // Get current story ID
+    const storyId = sceneParam.split('/')[0];
 
-      const readStoriesJson = localStorage.getItem(STORAGE_KEYS.READ_STORIES);
-      let readStories = readStoriesJson ? JSON.parse(readStoriesJson) : [];
+    const readStoriesJson = localStorage.getItem(STORAGE_KEYS.READ_STORIES);
+    let readStories = readStoriesJson ? JSON.parse(readStoriesJson) : [];
 
-      // まだ既読でない場合のみ、既読リストに追加して石を+1する
-      if (!readStories.includes(storyId)) {
-        readStories.push(storyId);
-        localStorage.setItem(STORAGE_KEYS.READ_STORIES, JSON.stringify(readStories));
+    // Add to read stories and grant stone only if not already read
+    if (!readStories.includes(storyId)) {
+      readStories.push(storyId);
+      localStorage.setItem(STORAGE_KEYS.READ_STORIES, JSON.stringify(readStories));
 
-        // 石のカウントを+1
-        const currentStones = parseInt(localStorage.getItem(STORAGE_KEYS.STONE_COUNT) || '0', 10);
-        localStorage.setItem(STORAGE_KEYS.STONE_COUNT, (currentStones + 1).toString());
-      }
-
-      DOM.msgWin.classList.add('hidden');
-      const menuBtn = document.getElementById('menu-hamburger');
-      if (menuBtn) menuBtn.classList.add('hidden');
-      await handleTransition(0, 1, 1, '#000');
-      window.location.replace('../index.html');
-    } else {
-      loadScene(texts.text[1]);
+      const currentStones = parseInt(localStorage.getItem(STORAGE_KEYS.STONE_COUNT) || '0', 10);
+      localStorage.setItem(STORAGE_KEYS.STONE_COUNT, (currentStones + 1).toString());
     }
+
+    DOM.msgWin.classList.add('hidden');
+    const menuBtn = document.getElementById('menu-hamburger');
+    if (menuBtn) menuBtn.classList.add('hidden');
+    await handleTransition(0, 1, 1, '#000'); // Fade to black
+    window.location.replace('../index.html'); // Redirect to story selection
+    return; // Stop further progression
+  }
+
+  // If not "out" and there's a next text entry, load the next scene
+  if (texts.text?.[1]) { // This now only handles scene loading, "end" is replaced by "out"
+    loadScene(texts.text[1]);
   }
 }
 
