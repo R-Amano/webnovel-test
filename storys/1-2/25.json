@@ -1,0 +1,17 @@
+{
+  "ra_scene_container": {
+    "back_id": "1-2/24",
+    "background": "scene/07.jpg",
+    "panels": {
+      "property": "character",
+      "url": "chara/rait3.png"
+    },
+    "texts": {
+      "name": "レイト",
+      "text": [
+        "ああ、よろしくな。\nとりあえず、息切らしてるんだから水でも飲め。",
+        "1-2/26"
+      ]
+    }
+  }
+}

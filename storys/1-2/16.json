@@ -1,0 +1,17 @@
+{
+  "ra_scene_container": {
+    "back_id": "1-2/15",
+    "background": "scene/07.jpg",
+    "panels": {
+      "property": "character",
+      "url": "chara/rait3.png"
+    },
+    "texts": {
+      "name": "レイト",
+      "text": [
+        "レイト教官と呼んでくれ。",
+        "1-2/17"
+      ]
+    }
+  }
+}

@@ -1,16 +1,16 @@
 {
   "ra_scene_container": {
-    "back_id": "1-2/10",
+    "back_id": "1-2/25",
+    "in_out": "out",
     "background": "scene/07.jpg",
     "panels": {
       "property": "character",
       "url": "chara/rait2.png"
     },
     "texts": {
-      "name": "？？？",
+      "name": "レイト",
       "text": [
-        "俺の懐中時計だと、今は８時１２分１５秒、１６、１７……",
-        "1-2/12"
+        "このあと、研修所でやることを説明する。"
       ]
     }
   }

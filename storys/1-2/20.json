@@ -1,0 +1,17 @@
+{
+  "ra_scene_container": {
+    "back_id": "1-2/19",
+    "background": "scene/07.jpg",
+    "panels": {
+      "property": "character",
+      "url": "chara/rait1.png"
+    },
+    "texts": {
+      "name": "レイト",
+      "text": [
+        "んで、ニッコニコなのが顔に出てるが。",
+        "1-2/21"
+      ]
+    }
+  }
+}

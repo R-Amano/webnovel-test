@@ -1,16 +1,16 @@
 {
   "ra_scene_container": {
-    "back_id": "1-2/10",
+    "back_id": "1-2/11",
     "background": "scene/07.jpg",
     "panels": {
       "property": "character",
-      "url": "chara/rait2.png"
+      "url": "chara/rait3.png"
     },
     "texts": {
       "name": "？？？",
       "text": [
-        "俺の懐中時計だと、今は８時１２分１５秒、１６、１７……",
-        "1-2/12"
+        "初日から遅刻はこの先を心配するぜ。",
+        "1-2/13"
       ]
     }
   }
