@@ -1,0 +1,17 @@
+{
+  "ra_scene_container": {
+    "back_id": "1-2/10",
+    "background": "scene/07.jpg",
+    "panels": {
+      "property": "character",
+      "url": "chara/rait1.png"
+    },
+    "texts": {
+      "name": "？？？",
+      "text": [
+        "俺の懐中時計だと、今は８時１２分１５秒、１６、１７……",
+        "1-2/12"
+      ]
+    }
+  }
+}

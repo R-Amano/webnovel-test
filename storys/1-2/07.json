@@ -1,0 +1,17 @@
+{
+  "ra_scene_container": {
+    "back_id": "1-2/06",
+    "background": "scene/07.jpg",
+    "panels":{
+      "property":"character",
+      "url":"chara/rait1.png"
+    },
+    "texts": {
+      "name": "？？？",
+      "text": [
+        "ん？\n新人ちゃん遅刻だぞ。",
+        "1-2/08"
+      ]
+    }
+  }
+}
