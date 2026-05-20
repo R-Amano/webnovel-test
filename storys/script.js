@@ -157,26 +157,31 @@ function updateBackground(background) {
 }
 
 function updatePanels(panels) {
-  DOM.panelLayer.innerHTML = '';
-  if (!panels?.url) return;
+  // 新しいコンテンツを効率的に構築するためのDocumentFragmentを作成
+  const fragment = document.createDocumentFragment();
 
-  const container = document.createElement('div');
-  container.className = 'panel-container';
+  if (panels?.url) {
+    const container = document.createElement('div');
+    container.className = 'panel-container';
 
-  if (panels.emote) {
-    const emoteImg = document.createElement('img');
-    emoteImg.src = getAssetPath(panels.emote);
-    emoteImg.className = 'emote-icon';
-    container.appendChild(emoteImg);
+    if (panels.emote) {
+      const emoteImg = document.createElement('img');
+      emoteImg.src = getAssetPath(panels.emote);
+      emoteImg.className = 'emote-icon';
+      container.appendChild(emoteImg);
+    }
+
+    const mainImg = document.createElement('img');
+    mainImg.src = getAssetPath(panels.url);
+    const prop = panels.property || 'character';
+    mainImg.className = `panel type-${prop}`;
+    container.appendChild(mainImg);
+
+    fragment.appendChild(container);
   }
 
-  const mainImg = document.createElement('img');
-  mainImg.src = getAssetPath(panels.url);
-  const prop = panels.property || 'character';
-  mainImg.className = `panel type-${prop}`;
-  container.appendChild(mainImg);
-
-  DOM.panelLayer.appendChild(container);
+  // panelLayerのすべての子要素を新しいコンテンツで一度に置き換える
+  DOM.panelLayer.replaceChildren(fragment);
 }
 
 function updateTexts(texts) {
