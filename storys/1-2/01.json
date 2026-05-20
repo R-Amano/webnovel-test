@@ -1,0 +1,14 @@
+{
+  "ra_scene_container": {
+    "back_id": "1-2/01",
+    "in_out": "in",
+    "background": "scene/07.jpg",
+    "texts": {
+      "name": "自分",
+      "text": [
+        "はあ……\nやっとついた！",
+        "1-2/02"
+      ]
+    }
+  }
+}
