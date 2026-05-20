@@ -1,32 +1,41 @@
-/* 基本設定 */
+/* =========================================
+   Variables & Global Reset
+   ========================================= */
 :root {
   --win-bg: rgba(0, 0, 0, 0.85);
   --accent-color: #fff;
   --text-color: #fff;
+  --gold-border: #d4af37;
 }
 
 * {
+  box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
 
-body {
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-body,
-html {
+html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   background-color: #000;
   overflow: hidden;
-  font-family: 'Shippori Mincho', "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Shippori Mincho', "serif";
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-/* ストーリー情報（左上） */
+/* =========================================
+   Core Layout
+   ========================================= */
+#game-container {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  overflow: hidden;
+}
+
 #story-info {
   position: absolute;
   top: calc(30px + env(safe-area-inset-top, 0px));
@@ -49,20 +58,17 @@ html {
   opacity: 0.8;
 }
 
-#game-container {
-  position: fixed;
-  inset: 0; /* top, right, bottom, left を 0 に設定 */
-  background: #000;
-  overflow: hidden;
-}
-
-/* 背景 */
 #background {
   width: 100%;
   height: 100%;
   background-size: cover;
   background-position: center;
 }
+
+/* =========================================
+   Panel & Character Layout
+   ========================================= */
+#panel-layer { position: absolute; inset: 0; pointer-events: none; }
 
 /* パネルレイアウト */
 .panel-container {
@@ -82,69 +88,12 @@ html {
 
 .type-character {
   height: 100dvh;
-  min-height: 500px; /* 画面が低くなっても500px以下にはならない */
+  min-height: 500px;
 }
 
-.type-panel {
-  height: 60vh;
-  width: 60vh;
-}
+.type-panel { height: 60vh; width: 60vh; }
+.type-item { height: 40vh; width: 40vh; }
 
-.type-item {
-  height: 40vh;
-  width: 40vh;
-}
-
-/* アニメーション */
-.fade {
-  animation: ani-fade 0.6s ease-out forwards;
-}
-
-.pan {
-  animation: ani-pan 0.4s infinite ease-in-out;
-}
-
-.tilt {
-  animation: ani-tilt 0.3s infinite ease-in-out;
-}
-
-@keyframes ani-fade {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes ani-pan {
-
-  0%,
-  100% {
-    transform: translateX(-4px);
-  }
-
-  50% {
-    transform: translateX(4px);
-  }
-}
-
-@keyframes ani-tilt {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-/* 感嘆符 (Emote) */
 .emote-icon {
   position: absolute;
   left: 50%;
@@ -157,28 +106,30 @@ html {
   animation: none;
 }
 
-/* メッセージウィンドウ */
+/* =========================================
+   Message Window
+   ========================================= */
 #message-window {
   position: absolute;
-  bottom: calc(20px + env(safe-area-inset-bottom)); /* 2%から20pxに固定して余裕を持たせる */
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   left: 5%;
   width: 90%;
   height: 110px;
   min-height: 110px;
   background: var(--win-bg);
-  border: 1.5px solid #d4af37; /* 金の枠線 */
+  border: 1.5px solid var(--gold-border);
   border-radius: 1px;
   color: var(--text-color);
   padding: 20px 40px 0px 5%;
-  box-sizing: border-box;
   cursor: pointer;
   z-index: 100;
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
 }
 
 #name-tag {
+  display: inline-block;
   position: absolute;
-  top: -15px; /* ウィンドウの枠線上に配置 */
+  top: -15px;
   left: 20px;
   background: #111; /* 名前タグを際立たせる背景色 */
   border: 1px solid #d4af37; /* 金の枠線を追加 */
@@ -202,23 +153,12 @@ html {
   animation: blink 1s infinite;
 }
 
-@keyframes blink {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-}
-
-/* メニュー用ボタン */
+/* =========================================
+   Menu UI Elements
+   ========================================= */
 .menu-btn {
-  width: 100%;
+  width: 240px;
   min-width: 240px;
-  padding: 18px;
   background: #222;
   color: #fff;
   border: 2px solid #fff;
@@ -234,20 +174,6 @@ html {
   color: #000;
 }
 
-/* トランジション（暗転） */
-#transition-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1000;
-  opacity: 0;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* ハンバーガーメニュー */
 #menu-hamburger {
   position: absolute;
   top: calc(30px + env(safe-area-inset-top, 0px));
@@ -262,12 +188,10 @@ html {
   align-items: center;
   color: white;
   font-size: 24px;
-  padding-bottom: 5px;
   cursor: pointer;
   z-index: 2000;
 }
 
-/* 設定ダイアログ */
 #menu-dialog {
   position: fixed;
   inset: 0;
@@ -290,10 +214,51 @@ html {
   gap: 20px;
 }
 
-/* 横長画面（スマホ横向き・デスクトップ）用の調整 */
+/* =========================================
+   Transitions & Utilities
+   ========================================= */
+#transition-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+}
+
+.hidden { display: none !important; }
+
+/* =========================================
+   Animations
+   ========================================= */
+.fade { animation: ani-fade 0.6s ease-out forwards; }
+.pan { animation: ani-pan 0.4s infinite ease-in-out; }
+.tilt { animation: ani-tilt 0.3s infinite ease-in-out; }
+
+@keyframes ani-fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ani-pan {
+  0%, 100% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+}
+
+@keyframes ani-tilt {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* =========================================
+   Responsive Adjustments
+   ========================================= */
 @media screen and (min-aspect-ratio: 1.3) {
   #message-window {
-    /* 下の余白を狭く調整 */
     bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   }
 }

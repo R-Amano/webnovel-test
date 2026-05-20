@@ -1,7 +1,10 @@
 /**
- * RA Engine - JSONキー構造に完全準拠したコントローラー
+ * RA Engine - Story Controller
  */
 
+// ==========================================
+// 1. Constants & Configuration
+// ==========================================
 const CONFIG = {
   ASSET_BASE_PATH: '../assets/img/',
   DEFAULT_TYPING_SPEED: 30,
@@ -24,19 +27,20 @@ const DOM = {
   textArea: document.getElementById('text-area'),
   transLayer: document.getElementById('transition-layer'),
   tapLayer: null // initMenu内で生成
+  // menuHamburger, menuDialog 等は initMenu 内で追加
 };
 
 const state = {
-  currentTypingTimer: null,
-  isTyping: false,
-  currentFullText: "",
-  currentSceneData: null,
-  metaData: null,
-  currentTexts: null
+  currentTypingTimer: null, // タイピング用タイマー
+  isTyping: false,          // タイピング中フラグ
+  currentFullText: "",      // 現在の全テキスト
+  currentSceneData: null,   // 現在のシーンJSONデータ
+  metaData: null,           // meta.jsonの内容
+  currentTexts: null        // 現在のテキスト要素（textsキー）
 };
 
 // ==========================================
-// 1. 初期設定・ユーティリティ
+// 2. Utilities & Data Loading
 // ==========================================
 
 /** アセットのフルパスを取得 */
@@ -54,10 +58,6 @@ function preloadImage(url) {
     img.onerror = resolve;
   });
 }
-
-// ==========================================
-// 2. データロード関連
-// ==========================================
 
 async function loadMetaData() {
   try {
@@ -100,7 +100,7 @@ async function loadScene(jsonPath) {
 }
 
 // ==========================================
-// 3. 描画・演出エンジン
+// 3. Rendering Engine
 // ==========================================
 
 async function renderScene(data) {
@@ -109,7 +109,7 @@ async function renderScene(data) {
 
   const menuBtn = document.getElementById('menu-hamburger');
   if (menuBtn) menuBtn.classList.add('hidden');
-
+  
   // UIクリーンアップ
   DOM.textArea.textContent = '';
   DOM.msgWin.classList.add('hidden');
@@ -199,7 +199,7 @@ function updateTexts(texts) {
 }
 
 // ==========================================
-// 4. テキストタイピング制御
+// 4. Typing Effects
 // ==========================================
 
 function typeText(element, text, speed = CONFIG.DEFAULT_TYPING_SPEED) {
@@ -230,7 +230,7 @@ function skipTyping(element, fullText) {
 }
 
 // ==========================================
-// 5. ストーリー進行ロジック
+// 5. Progression Logic
 // ==========================================
 
 async function handleStoryProgress() {
@@ -274,13 +274,8 @@ async function handleStoryProgress() {
 }
 
 // ==========================================
-// 6. メニュー・ユーザーインターフェース
+// 6. UI & Menu Initialization
 // ==========================================
-
-// 右クリックメニュー（長押しメニュー）を無効化
-document.addEventListener('contextmenu', e => e.preventDefault());
-// 画像などのドラッグを無効化
-document.addEventListener('dragstart', e => e.preventDefault());
 
 function initMenu() {
   // 全面タップ用のレイヤー作成
@@ -300,11 +295,13 @@ function initMenu() {
   DOM.tapLayer.onclick = handleTap;
   DOM.msgWin.onclick = handleTap;
 
-  const btn = document.createElement('div');
-  btn.id = 'menu-hamburger';
-  btn.innerHTML = '&#9776;';
-  document.body.appendChild(btn);
+  // ハンバーガーボタン作成
+  const hamburger = document.createElement('div');
+  hamburger.id = 'menu-hamburger';
+  hamburger.innerHTML = '&#9776;';
+  document.body.appendChild(hamburger);
 
+  // ダイアログ作成
   const dialog = document.createElement('div');
   dialog.id = 'menu-dialog';
   dialog.className = 'hidden';
@@ -317,7 +314,8 @@ function initMenu() {
   `;
   document.body.appendChild(dialog);
 
-  btn.onclick = (e) => {
+  // メニューイベント登録
+  hamburger.onclick = (e) => {
     e.stopPropagation();
     dialog.classList.remove('hidden');
   };
@@ -342,13 +340,16 @@ function initMenu() {
 }
 
 // ==========================================
-// 7. エントリーポイント（実行開始）
+// 7. Entry Point
 // ==========================================
+
+// 基本操作の制限
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('dragstart', e => e.preventDefault());
 
 initMenu();
 
 const urlParams = new URLSearchParams(window.location.search);
-const sceneParam = urlParams.get('scene');
-const initialScene = sceneParam || '1-1/01';
+const initialScene = urlParams.get('scene') || '1-1/01';
 
 loadScene(initialScene);
